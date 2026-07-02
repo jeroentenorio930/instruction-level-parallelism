@@ -1,0 +1,116 @@
+---
+layout: '../layouts/ExhibitLayout.astro'
+title: "Instruction-Level Parallelism & Pipelining"
+author: "HIZON, Allen; INFANTE, Charles; MARQUEZ, Jose Miguel; SY, Justin; TENORIO, Jeroen"
+readingTime: "8 minute read"
+---
+
+{/* We import various Astro and React components */}
+import TextWithImage from "../components/TextWithImage.astro"
+
+{/* Images have to be imported manually */}
+import cpuThumb from "../assets/cpu-placeholder.png"
+import assemblyLine from "../assets/assembly-placeholder.png"
+
+{/* Used for the ImageGallery component */}
+
+{/* Actual content */}
+
+# Introduction to Instruction Level Parallelism
+
+<TextWithImage
+  body="Instruction-Level Parallelism (ILP) is one of the core concepts behind modern fast processors. 
+        It is the architectural technique that allows a CPU to execute multiple instructions simultaneously, 
+        ensuring that hardware resources are pushed to their maximum potential rather than sitting idle. 
+        Every processor you interact with today, from the chip in a smartphone to a data-center server, 
+        is designed around this idea in some form."
+  imageSrc={cpuThumb.src}
+  imageAlt="Illustration of a modern processor"
+  imageCaption="ILP is the foundation of modern CPU speed."
+/>
+
+This exhibit explores **pipelining**, the primary hardware technique CPUs use to achieve ILP. 
+We'll walk through why it was needed, how it works, what can go wrong when instructions overlap, and how 
+modern hardware resolves those conflicts automatically.
+
+## Why Pipelining Exists: The Sequential Bottleneck
+
+<TextWithImage
+  body="Input Text Here."
+  imageSrc={assemblyLine.src}
+  imageAlt="Diagram of sequential execution bottleneck"
+  reverse={true}
+/>
+
+Input Text Here
+
+## What is Pipelining?
+
+Input Text Here
+
+1. **Fetch (F):** Grab the instruction from memory.
+2. **Decode (D):** Figure out what the instruction means and read the required registers.
+3. **Execute (E):** Perform the mathematical or logical operation.
+4. **Memory (M):** Read from or write to data memory.
+5. **Write-back (WB):** Save the final result to a register.
+
+Input Text Here
+
+Input Text Here: intro to the interactive element!
+
+{/*
+  INTERACTIVE ELEMENT (to be added):
+  Non-pipelined vs. pipelined execution simulator.
+  - Slider controls the number of instructions.
+  - Toggle between "pipelining off" (sequential, one instruction fully
+    completes before the next begins) and "pipelining on" (overlapped,
+    matches the table above).
+  - Displays total cycles/time for each mode side-by-side so the user can
+    see the speedup grow as instruction count increases.
+  This section's static table above is a placeholder explanation until
+  that simulation is built.
+*/}
+
+## The Danger: Pipeline Hazards
+
+Input text Here
+
+### Data Hazards
+
+Input text Here
+
+### Branch Hazards (Control Hazards)
+
+Input text Here
+
+{/*
+  INTERACTIVE ELEMENT (to be added later):
+  Hazard scenario simulator.
+  - Lets the user place a data hazard between two chosen instructions and
+    watch the RAW conflict highlighted on the pipeline diagram.
+  - Lets the user trigger a branch and choose whether it is predicted
+    correctly or mispredicted, visualizing the resulting instruction fetch.
+  This section's code snippet and explanation above are the static
+  placeholder until that simulation is built.
+*/}
+
+## 4. Solutions: Hardware Interventions
+
+Input text Here
+
+{/*
+  INTERACTIVE ELEMENT (to be added later):
+  Stall vs. flush cost simulator.
+  - User selects where a data hazard occurs; simulation shows the pipeline
+    stalling (bubble inserted) versus forwarding (no stall) for comparison.
+  - User triggers a branch misprediction and sees the flush clear the
+    in-flight incorrect instructions, with the resulting cycle cost
+    displayed alongside the stall cost above for direct comparison.
+*/}
+
+## 5. Summary
+
+Input text Here
+
+## References
+* *References will be expanded as development continues.*
