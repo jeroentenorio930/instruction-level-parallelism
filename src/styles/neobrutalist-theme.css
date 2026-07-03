@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+    --accent: #346083; 
+    --bg1: #F4F0EA;  
+    --bg2: #FFFFFF;  
+    --text: #111111;  
+    --muted: #555555;
+    --border: #111111; 
+    
+    --radius: 0px; 
+}
+
+html {
+    background-color: var(--bg1);
+    background-image:
+        linear-gradient(#E3DCD0 1px, transparent 1px),
+        linear-gradient(90deg, #E3DCD0 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+body {
+    font-family: 'Space Mono', monospace; 
+    color: var(--text);
+}
+
+.title, 
+.subtitle,
+.article h1,
+.article h2,
+.article h3,
+.article h4,
+.toc h2,
+.content__titlemeta h1 {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-shadow: none; 
+    color: var(--text);
+}
+
+.header__titleblock,
+.article,
+.content__titlemeta,
+.exhibitlink,
+.toc {
+    background: var(--bg2);
+    border: 3px solid var(--border);
+    border-radius: var(--radius);
+   
+    box-shadow: 8px 8px 0px var(--border);
+    margin-bottom: 8px; 
+}
+
+.header__titleblock,
+.toc {
+    background-color: var(--accent);
+    color: #FFFFFF;
+}
+
+.toc h2 {
+    color: #FFFFFF;
+    border-bottom: 3px solid #FFFFFF;
+}
+
+.toc__item a {
+    color: #FFFFFF;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.toc__item a:hover {
+    background-color: #FFFFFF;
+    color: var(--accent);
+}
+
+.button {
+    background-color: #FFFFFF;
+    color: var(--text);
+    border: 3px solid var(--border);
+    border-radius: 0px;
+    box-shadow: 4px 4px 0px var(--border);
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.button:hover {
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.button:active {
+    box-shadow: 0px 0px 0px var(--border);
+    transform: translate(4px, 4px);
+}
+
+.article h2, 
+.article h3 {
+    border-bottom: 3px solid var(--border);
+    padding-bottom: 0.5rem;
+}
