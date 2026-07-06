@@ -1,1 +1,86 @@
-Incremental readme - document your development (things done) in the readme (aha moments, things learned, challenges, creative development, etc) as well as things to be done on the final submission.  Those documents should be part of the incremental readme (new document on top of the previous proposal document).
+# A Deep Dive into Instruction Level Parallelism - The Foundation of Fast Processors
+
+Group 4 - S01
+
+- HIZON, Allen Conner C.
+- INFANTE, Charles Sebastian V.
+- MARQUEZ, Jose Miguel S.
+- SY, Justin John Abraham F.
+- TENORIO, Jeroen Ralph I.
+
+---
+
+## Proposal Revisions
+
+### Previous Feedback
+
+```
+Topic disapproved.
+
+1.) Topic should be related to computer architecture.  The proposed topic is a purely a Computer Network topic.
+
+2.) No GitHub submission.  Setup the GitHub.  Proposal documents part of the incremental readme.
+
+Alternative:
+
+*Wifi evolution
+*mobile network evolution
+```
+
+### Key Changes Made
+
+- **Topic Change:** Previous proposed topic of Password Life Cycle got rejected and changed to Instruction-Level Pipelining
+- **Tentative Style Change:** Mockup images changed to be less "slide-like" and focus more on the mockup for the simulation + interactive element (user slider)
+
+## 1. Topic Theme
+
+### An in-depth dive into Instruction-Level Parallelism and Pipelining
+
+This topic explores the concept of Instruction-Level Parallelism (ILP) in CPUs, which is one of the core concepts behind making fast processors by allowing them to execute multiple instructions simultaneously. The deep dive starts by explaining ILP and its necessity for CPUs, noting how it is a concept every modern processor is designed around.
+
+The exhibit then focuses on the implementation of **pipelining**, the primary method for achieving ILP in CPUs. Through its interactive simulation of pipelining, the users will be able to visualize instruction execution both before and after pipelining is implemented, enabling them to understand the necessity of the technique. Besides this, the exhibit will also contain simulations for common pipelining hazards – it will show data and branch hazards, along with the techniques used to address them such as pipeline flushes and stalls.
+
+## 2. Interactive Element
+
+The primary interactive element is a simulation of CPU instruction pipelining. The exhibit will first display CPUs executing instructions without pipelining, showing how the full fetch, decode, execute, write-back cycle gets executed for every instruction sequentially. A slider is provided allowing the user to increase the number of instructions and see the corresponding increase in time for the simulation to complete.
+
+Then, the simulation will provide the option to enable pipelining. It will demonstrate visually how the instructions get executed in parallel, with different instructions in different stages as the CPU executes them simultaneously. The slider will enable the user to see how despite the same increase in load, the CPU maintains faster execution speeds this time through pipelining.
+
+The simulation will then allow the user to simulate pipelining hazard scenarios such as branch hazards and data hazards, explaining how they occur and visualizing the process. Then, the simulation will also give the user the opportunity to utilize techniques such as pipeline flushing and pipeline stalling to avoid these hazard scenarios, with the time cost of both techniques properly visualized.
+
+## 3. Tech Stack Plan
+
+| Component | Technology | Application & Justification |
+| :---- | :---- | :---- |
+| Runtime | Node.js | Running Astro and building tools. |
+| Framework | Astro 6 | Main framework for building the virtual exhibit website. |
+| Content | MDX | Allows writing content in Markdown while embedding interactive React components directly into the text. |
+| UI Components | React & TypeScript | Manages the complex, dynamic state of the interactive branch prediction simulator. |
+| Styling | Tailwind CSS | Handles mobile-responsive UI and hardware-themed styling via utility classes. |
+
+## 4. Tentative Style
+
+### Mobile-responsive layout
+
+The website will be usable and responsive on mobile devices due to the lack of advanced features that would necessitate a desktop device. There will be no intensive calculations on the client side, and the layout of the simulation and controls can easily be adjusted to accommodate for mobile devices given the chosen technologies like Tailwind CSS and React.
+
+![No pipeline 1](./images/3.png)
+![No pipeline 2](./images/4.png)
+
+These two mockup images illustrate the simulation of instruction execution without pipelining. The slider adjusts the number of instructions, and the simulation would display the corresponding time it takes to execute all instructions one after the other.  
+
+![Pipelining 1](./images/6.png)
+![Pipelining 2](./images/7.png)
+These two mockup images illustrate the simulation of instruction execution with pipelining. The slider still adjusts the number of instructions, and the simulation would display how the CPU executes pipelined instructions much faster in parallel.
+
+![Pipeline flush 1](./images/8.png)
+![Pipeline flush 2](./images/9.png)
+These two mockup images illustrate the CPU’s handling of a branch misprediction scenario through a pipeline flush. The user would be able to simulate a branch misprediction and view how the corresponding flush causes the remaining instructions to be cleared out.  
+
+![Pipeline stall 1](./images/10.png)
+
+The last mockup image shows a simulation of the CPU performing a pipeline stall in order to avoid a data hazard when an instruction is dependent on a previous one. The user is able to choose where the simulated data hazard happens and is able to see the corresponding pipeline stall that enables the operation to complete before the dependent instruction is executed.
+
+## Website Development Section
+
+Incremental readme - document your development (things done) in the readme (aha moments, things learned, challenges, creative development, etc) as well as things to be done on the final submission. Those documents should be part of the incremental readme (new document on top of the previous proposal document).
