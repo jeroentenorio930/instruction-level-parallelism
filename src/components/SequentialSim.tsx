@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { generateSequentialGrid } from './pipelineUtils';
 import PipelineGrid from './PipelineGrid';
 
+const MAX_INSTRUCTIONS = 4;
+const MAX_CYCLES = MAX_INSTRUCTIONS * 5; // 20
+
 export default function SequentialSim() {
-  const [instructionCount, setInstructionCount] = useState<number>(3);
+  const [instructionCount, setInstructionCount] = useState<number>(4);
   const [currentCycle, setCurrentCycle] = useState<number>(-1);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
@@ -59,15 +62,46 @@ export default function SequentialSim() {
     setCurrentCycle((prev) => (prev < totalCycles - 1 ? prev + 1 : prev));
   };
 
-  const rows = generateSequentialGrid(instructionCount, currentCycle);
-  const timeCycles = Array.from({ length: totalCycles }, (_, i) => i);
+  // Always generate the grid at MAX size so table dimensions never change.
+  // Use the real instruction count for active rows, but pass MAX to the generator.
+  const fullRows = generateSequentialGrid(MAX_INSTRUCTIONS, currentCycle);
+  const timeCycles = Array.from({ length: MAX_CYCLES }, (_, i) => i);
 
-  // Utilization calculation:
-  // Sequential execution only uses 1 hardware stage at a time (e.g. F, D, E, M, or WB)
-  // while the other 4 stages sit completely idle.
-  // When active (i.e. between cycle 0 and totalCycles - 1), exactly 1 stage is active.
-  // Over the entire time, utilization is (1 stage active / 5 stages total) = 20%.
-  // If not running, utilization is 0%.
+  // Mark rows beyond the selected count as inactive (faded)
+  const rows = fullRows.map((row, idx) => {
+    if (idx >= instructionCount) {
+      return {
+        ...row,
+        label: '—',
+        cells: row.cells.map((cell) => ({
+          ...cell,
+          type: 'empty' as const,
+          label: '',
+          stageName: undefined,
+          isHighlighted: false,
+          isFaded: false,
+        })),
+      };
+    }
+    // For active rows, blank out cells beyond the active totalCycles
+    return {
+      ...row,
+      cells: row.cells.map((cell) => {
+        if (cell.cellCycle >= totalCycles) {
+          return {
+            ...cell,
+            type: 'empty' as const,
+            label: '',
+            stageName: undefined,
+            isHighlighted: false,
+          };
+        }
+        return cell;
+      }),
+    };
+  });
+
+  // Utilization calculation
   const activePercent = currentCycle >= 0 && currentCycle < totalCycles ? 20 : 0;
 
   return (
@@ -104,6 +138,7 @@ export default function SequentialSim() {
           type="range"
           min="1"
           max="4"
+          step="1"
           value={instructionCount}
           onChange={(e) => setInstructionCount(parseInt(e.target.value))}
           className="ps-slider-input"
@@ -139,3 +174,4 @@ export default function SequentialSim() {
     </div>
   );
 }
+

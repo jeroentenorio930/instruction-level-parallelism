@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { generatePipelinedGrid } from './pipelineUtils';
 import PipelineGrid from './PipelineGrid';
 
+const MAX_INSTRUCTIONS = 4;
+const MAX_CYCLES = 4 + MAX_INSTRUCTIONS; // 8
+
 export default function PipelinedSim() {
-  const [instructionCount, setInstructionCount] = useState<number>(3);
+  const [instructionCount, setInstructionCount] = useState<number>(4);
   const [currentCycle, setCurrentCycle] = useState<number>(-1);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
@@ -59,8 +62,28 @@ export default function PipelinedSim() {
     setCurrentCycle((prev) => (prev < totalCycles - 1 ? prev + 1 : prev));
   };
 
-  const rows = generatePipelinedGrid(instructionCount, currentCycle);
-  const timeCycles = Array.from({ length: totalCycles }, (_, i) => i);
+  // Always generate the grid at MAX size so table dimensions never change
+  const fullRows = generatePipelinedGrid(MAX_INSTRUCTIONS, currentCycle);
+  const timeCycles = Array.from({ length: MAX_CYCLES }, (_, i) => i);
+
+  // Mark rows beyond the selected count as inactive
+  const rows = fullRows.map((row, idx) => {
+    if (idx >= instructionCount) {
+      return {
+        ...row,
+        label: '—',
+        cells: row.cells.map((cell) => ({
+          ...cell,
+          type: 'empty' as const,
+          label: '',
+          stageName: undefined,
+          isHighlighted: false,
+          isFaded: false,
+        })),
+      };
+    }
+    return row;
+  });
 
   // Compute instantaneous hardware utilization
   let activeStagesCount = 0;
@@ -114,6 +137,7 @@ export default function PipelinedSim() {
           type="range"
           min="1"
           max="4"
+          step="1"
           value={instructionCount}
           onChange={(e) => setInstructionCount(parseInt(e.target.value))}
           className="ps-slider-input"
@@ -149,3 +173,4 @@ export default function PipelinedSim() {
     </div>
   );
 }
+
