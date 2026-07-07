@@ -103,7 +103,7 @@ export default function SequentialSim() {
         <input
           type="range"
           min="1"
-          max="6"
+          max="4"
           value={instructionCount}
           onChange={(e) => setInstructionCount(parseInt(e.target.value))}
           className="ps-slider-input"
