@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Mono:wght@400;700&display=swap');
 
-:root {
+:root:has(#neobrutalist-page) {
     --accent: #346083; 
     --bg1: #F4F0EA;  
     --bg2: #FFFFFF;  
@@ -11,7 +11,7 @@
     --radius: 0px; 
 }
 
-html {
+html:has(#neobrutalist-page) {
     background-color: var(--bg1);
     background-image:
         linear-gradient(#E3DCD0 1px, transparent 1px),
@@ -19,19 +19,19 @@ html {
     background-size: 30px 30px;
 }
 
-body {
+body:has(#neobrutalist-page) {
     font-family: 'Space Mono', monospace; 
     color: var(--text);
 }
 
-.title, 
-.subtitle,
-.article h1,
-.article h2,
-.article h3,
-.article h4,
-.toc h2,
-.content__titlemeta h1 {
+body:has(#neobrutalist-page) .title, 
+body:has(#neobrutalist-page) .subtitle,
+body:has(#neobrutalist-page) .article h1,
+body:has(#neobrutalist-page) .article h2,
+body:has(#neobrutalist-page) .article h3,
+body:has(#neobrutalist-page) .article h4,
+body:has(#neobrutalist-page) .toc h2,
+body:has(#neobrutalist-page) .content__titlemeta h1 {
     font-family: 'DM Serif Display', serif;
     font-weight: 400;
     letter-spacing: 0.5px;
@@ -39,11 +39,11 @@ body {
     color: var(--text);
 }
 
-.header__titleblock,
-.article,
-.content__titlemeta,
-.exhibitlink,
-.toc {
+body:has(#neobrutalist-page) .header__titleblock,
+body:has(#neobrutalist-page) .article,
+body:has(#neobrutalist-page) .content__titlemeta,
+body:has(#neobrutalist-page) .exhibitlink,
+body:has(#neobrutalist-page) .toc {
     background: var(--bg2);
     border: 3px solid var(--border);
     border-radius: var(--radius);
@@ -52,30 +52,30 @@ body {
     margin-bottom: 8px; 
 }
 
-.header__titleblock,
-.toc {
+body:has(#neobrutalist-page) .header__titleblock,
+body:has(#neobrutalist-page) .toc {
     background-color: var(--accent);
     color: #FFFFFF;
 }
 
-.toc h2 {
+body:has(#neobrutalist-page) .toc h2 {
     color: #FFFFFF;
     border-bottom: 3px solid #FFFFFF;
 }
 
-.toc__item a {
+body:has(#neobrutalist-page) .toc__item a {
     color: #FFFFFF;
     text-decoration: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
 }
 
-.toc__item a:hover {
+body:has(#neobrutalist-page) .toc__item a:hover {
     background-color: #FFFFFF;
     color: var(--accent);
 }
 
-.button {
+body:has(#neobrutalist-page) .button {
     background-color: #FFFFFF;
     color: var(--text);
     border: 3px solid var(--border);
@@ -87,18 +87,18 @@ body {
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.button:hover {
+body:has(#neobrutalist-page) .button:hover {
     color: var(--text);
     border-color: var(--border);
 }
 
-.button:active {
+body:has(#neobrutalist-page) .button:active {
     box-shadow: 0px 0px 0px var(--border);
     transform: translate(4px, 4px);
 }
 
-.article h2, 
-.article h3 {
+body:has(#neobrutalist-page) .article h2, 
+body:has(#neobrutalist-page) .article h3 {
     border-bottom: 3px solid var(--border);
     padding-bottom: 0.5rem;
 }
