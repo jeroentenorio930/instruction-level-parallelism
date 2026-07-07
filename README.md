@@ -84,3 +84,18 @@ The last mockup image shows a simulation of the CPU performing a pipeline stall 
 ## Website Development Section
 
 Incremental readme - document your development (things done) in the readme (aha moments, things learned, challenges, creative development, etc) as well as things to be done on the final submission. Those documents should be part of the incremental readme (new document on top of the previous proposal document).
+
+### Phase 1: Completed Development & Implementation
+- **Visual Design (`pipeline-theme.css`)**: Built a customized legacy BIOS dark navy/neon cyan style, with scanline gradients and specialized responsive layout adjustments.
+- **Core Engine (`PipelineGrid.tsx` & `pipelineUtils.ts`)**: Built a central presentational grid component to render clock cycle tables and support responsive overlays.
+- **Interactive Sims**:
+  - **Sequential Sim (`SequentialSim.tsx`)**: Visualizes non-pipelined sequential execution (20% hardware unit utilization).
+  - **Pipelined Sim (`PipelinedSim.tsx`)**: Demonstrates staggering and dynamic speedup ratio tracking (up to $3.33\times$).
+  - **Hazard Flush Sim (`HazardFlushSim.tsx`)**: Traces branch mispredictions with flushing shakes, NOP injections, and animated redirection arrows.
+  - **Hazard Stall Sim (`HazardStallSim.tsx`)**: Models data dependencies, stalls (cloud bubbles), and optimized bypass data forwarding paths.
+- **MDX Integration (`pipelining.mdx`)**: Fully updated all content text with detailed academic descriptions, references, and visual embeds.
+
+### Challenges & AHA! Moments
+- **The Browser Auto-Zoom Bug (Challenge)**: While adjusting instruction counts, the grid columns grew larger. Under default flexbox properties, children have `min-width: auto`, which forced the entire simulator box to expand beyond the viewport. The browser responded by automatically zooming the entire page to fit the wide layout, making elements shrink and causing a jarring user experience.
+- **The Constrained Layout (AHA! Moment)**: Applying `min-width: 0` and `max-width: 100%` on the scrollable container (`.ps-grid-scroll`), coupled with `max-width: 100%; overflow: hidden;` on the flex wrapper (`.ps-grid-wrapper`), successfully bounded the layouts. The grid tables now scroll smoothly inside their containers instead of resizing the entire website.
+
