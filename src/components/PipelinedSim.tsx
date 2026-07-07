@@ -106,19 +106,19 @@ export default function PipelinedSim() {
           rows={rows}
           activeCycle={currentCycle}
         />
+      </div>
 
-        <div className="ps-slider-container">
-          <span className="ps-slider-label">INSTRUCTIONS</span>
-          <span className="ps-slider-value">{instructionCount}</span>
-          <input
-            type="range"
-            min="1"
-            max="8"
-            value={instructionCount}
-            onChange={(e) => setInstructionCount(parseInt(e.target.value))}
-            className="ps-slider"
-          />
-        </div>
+      <div className="ps-slider-bar">
+        <span className="ps-slider-label">Instructions</span>
+        <input
+          type="range"
+          min="1"
+          max="6"
+          value={instructionCount}
+          onChange={(e) => setInstructionCount(parseInt(e.target.value))}
+          className="ps-slider-input"
+        />
+        <span className="ps-slider-value">{instructionCount}</span>
       </div>
 
       <div className="ps-stats">
