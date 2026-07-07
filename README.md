@@ -64,20 +64,20 @@ The simulation will then allow the user to simulate pipelining hazard scenarios 
 
 The website will be usable and responsive on mobile devices due to the lack of advanced features that would necessitate a desktop device. There will be no intensive calculations on the client side, and the layout of the simulation and controls can easily be adjusted to accommodate for mobile devices given the chosen technologies like Tailwind CSS and React.
 
-![No pipeline 1](./images/3.png)
-![No pipeline 2](./images/4.png)
+![No pipeline 1](./proposal_images/3.png)
+![No pipeline 2](./proposal_images/4.png)
 
 These two mockup images illustrate the simulation of instruction execution without pipelining. The slider adjusts the number of instructions, and the simulation would display the corresponding time it takes to execute all instructions one after the other.  
 
-![Pipelining 1](./images/6.png)
-![Pipelining 2](./images/7.png)
+![Pipelining 1](./proposal_images/6.png)
+![Pipelining 2](./proposal_images/7.png)
 These two mockup images illustrate the simulation of instruction execution with pipelining. The slider still adjusts the number of instructions, and the simulation would display how the CPU executes pipelined instructions much faster in parallel.
 
-![Pipeline flush 1](./images/8.png)
-![Pipeline flush 2](./images/9.png)
+![Pipeline flush 1](./proposal_images/8.png)
+![Pipeline flush 2](./proposal_images/9.png)
 These two mockup images illustrate the CPU’s handling of a branch misprediction scenario through a pipeline flush. The user would be able to simulate a branch misprediction and view how the corresponding flush causes the remaining instructions to be cleared out.  
 
-![Pipeline stall 1](./images/10.png)
+![Pipeline stall 1](./proposal_images/10.png)
 
 The last mockup image shows a simulation of the CPU performing a pipeline stall in order to avoid a data hazard when an instruction is dependent on a previous one. The user is able to choose where the simulated data hazard happens and is able to see the corresponding pipeline stall that enables the operation to complete before the dependent instruction is executed.
 
