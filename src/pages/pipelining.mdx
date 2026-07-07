@@ -18,32 +18,15 @@ import cpuThumb from "../assets/cpu-placeholder.png"
 import assemblyLine from "../assets/assembly-placeholder.png"
 
 # Introduction to Instruction Level Parallelism
+Instruction-Level Parallelism (ILP) is one of the core concepts behind modern fast processors. It is the architectural technique that allows a CPU to execute multiple instructions simultaneously, ensuring that hardware resources are pushed to their maximum potential rather than sitting idle. Every processor you interact with today, from the chip in a smartphone to a data-center server, is designed around this idea in some form.
 
-<TextWithImage
-  body="Instruction-Level Parallelism (ILP) is one of the core concepts behind modern fast processors. 
-        It is the architectural technique that allows a CPU to execute multiple instructions simultaneously, 
-        ensuring that hardware resources are pushed to their maximum potential rather than sitting idle. 
-        Every processor you interact with today, from the chip in a smartphone to a data-center server, 
-        is designed around this idea in some form."
-  imageSrc={cpuThumb.src}
-  imageAlt="Illustration of a modern processor"
-  imageCaption="ILP is the foundation of modern CPU speed."
-/>
-
-This exhibit explores **pipelining**, the primary hardware technique CPUs use to achieve ILP. 
-We'll walk through why it was needed, how it works, what can go wrong when instructions overlap, and how 
-modern hardware resolves those conflicts automatically.
+This exhibit explores **pipelining**, the primary hardware technique CPUs use to achieve ILP. We'll walk through why it was needed, how it works, what can go wrong when instructions overlap, and how modern hardware resolves those conflicts automatically.
 
 ## Why Pipelining Exists: The Sequential Bottleneck
 
-<TextWithImage
-  body="Before pipelining, processors executed instructions in a strictly sequential manner. Each instruction had to go through all five stages of execution—Fetch, Decode, Execute, Memory Access, and Write-back—before the next instruction could even begin. This meant that at any given moment, only one hardware unit was active while the rest sat idle, creating a severe performance bottleneck."
-  imageSrc={assemblyLine.src}
-  imageAlt="Diagram of sequential execution bottleneck"
-  reverse={true}
-/>
+Before pipelining, processors executed instructions in a strictly sequential manner. Each instruction had to go through all five stages of execution—Fetch, Decode, Execute, Memory Access, and Write-back—before the next instruction could even begin. This meant that at any given moment, only one hardware unit was active while the rest sat idle, creating a severe performance bottleneck.
 
-With non-pipelined execution, if an instruction takes 5 clock cycles to complete, a sequence of $N$ instructions will take $5N$ cycles. Increasing the instruction load directly multiplies the execution time, leaving the hardware units utilized only 20% of the time on average.
+With non-pipelined execution, if an instruction takes 5 clock cycles to complete, a sequence of **N** instructions will take **5N** cycles. Increasing the instruction load directly multiplies the execution time, leaving the hardware units utilized only 20% of the time on average.
 
 Use the simulator below to visualize sequential execution. Adjust the instruction count slider to see how execution time scales.
 
@@ -61,7 +44,7 @@ Modern processors divide instruction execution into five classic stages:
 4. **Memory (M):** Read from or write data to data memory (if applicable).
 5. **Write-back (WB):** Save the final result back to the register file.
 
-In an ideal pipeline, a new instruction is completed every clock cycle once the pipeline is full. A sequence of $N$ instructions takes only $4 + N$ cycles to execute, achieving a near-5x speedup over sequential execution for large instruction counts.
+In an ideal pipeline, a new instruction is completed every clock cycle once the pipeline is full. A sequence of **N** instructions takes only **4 + N** cycles to execute, achieving a near-5x speedup over sequential execution for large instruction counts.
 
 Compare the pipelined execution below to the sequential model above. Notice how instructions stagger diagonally and how hardware stage utilization reaches up to 100% when the pipeline is fully filled.
 
@@ -101,5 +84,5 @@ Toggle data forwarding in the simulator below to compare how the CPU stalls to r
 Instruction-Level Parallelism via pipelining is the foundation of high-performance processor design. While overlapping instruction execution dramatically increases throughput, hardware designers must implement complex mechanisms like forwarding paths, interlocks, and branch predictors to manage hazards and keep the execution units running at maximum efficiency.
 
 ## References
-* Patterson, D. A., & Hennessy, J. L. (2017). *Computer Organization and Design: The Hardware/Software Interface RISC-V Edition*. Morgan Kaufmann.
+* Hennessy, J. L., & Patterson, D. A. (2017). Computer Architecture: A Quantitative Approach. Morgan Kaufmann.
 * Stallings, W. (2016). *Computer Organization and Architecture*. Pearson.
