@@ -26,7 +26,7 @@ This exhibit explores **pipelining**, the primary hardware technique CPUs use to
 
 Before pipelining, processors executed instructions in a strictly sequential manner. Each instruction had to go through all five stages of execution—Fetch, Decode, Execute, Memory Access, and Write-back—before the next instruction could even begin. This meant that at any given moment, only one hardware unit was active while the rest sat idle, creating a severe performance bottleneck.
 
-With non-pipelined execution, if an instruction takes 5 clock cycles to complete, a sequence of **N** instructions will take **5N** cycles. Increasing the instruction load directly multiplies the execution time, leaving the hardware units utilized only 20% of the time on average.
+With non-pipelined execution, if an instruction takes 5 clock cycles to complete, a sequence of **N** instructions will take **5N** cycles. Increasing the instruction load directly **multiplies the execution time**, leaving the hardware units utilized only 20% of the time on average.
 
 Use the simulator below to visualize sequential execution. Adjust the instruction count slider to see how execution time scales.
 

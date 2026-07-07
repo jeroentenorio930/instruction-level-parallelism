@@ -91,7 +91,7 @@ Incremental readme - document your development (things done) in the readme (aha 
 - **Core Engine (`PipelineGrid.tsx` & `pipelineUtils.ts`)**: Built a central presentational grid component to render clock cycle tables and support responsive overlays.
 - **Interactive Simulations**:
   - **Sequential Sim (`SequentialSim.tsx`)**: Visualizes non-pipelined sequential execution (20% hardware unit utilization).
-  - **Pipelined Sim (`PipelinedSim.tsx`)**: Demonstrates staggering and dynamic speedup ratio tracking (up to $3.33\times$).
+  - **Pipelined Sim (`PipelinedSim.tsx`)**: Demonstrates staggering and dynamic speedup ratio tracking (up to 3x speedup and 100% hardware unit utilization).
   - **Hazard Flush Sim (`HazardFlushSim.tsx`)**: Traces branch mispredictions with flushing shakes, NOP injections, and animated redirection arrows.
   - **Hazard Stall Sim (`HazardStallSim.tsx`)**: Models data dependencies, stalls (cloud bubbles), and optimized bypass data forwarding paths.
 - **MDX Integration (`pipelining.mdx`)**: Fully updated all content text with detailed academic descriptions, references, and visual embeds.
@@ -102,6 +102,11 @@ Incremental readme - document your development (things done) in the readme (aha 
 - **The Constrained Layout (AHA! Moment)**: Applying `min-width: 0` and `max-width: 100%` on the scrollable container (`.ps-grid-scroll`), coupled with `max-width: 100%; overflow: hidden;` on the flex wrapper (`.ps-grid-wrapper`), successfully bounded the layouts. The grid tables now scroll smoothly inside their containers instead of resizing the entire website.
 - **2000 Pixels of Instructions (Challenge)**: For the first interactive element meant to show the time requirements of non-pipelined execution, the original layout made it go up to 8 instructions and consequently take over 2000 pixels horizontally.
 - **Doing Too Much (AHA! Moment)**: To fix that, we simply toned down the interactive element to a maximum of 4 instructions. It still illustrates the point well enough without becoming overbearing to the point where the rest of the website layout suffers.
+
+### Things to Be Done for the Final Submission
+
+WIP
+
 
 ### Disclosure on Usage of AI and LLM
 

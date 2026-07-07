@@ -156,10 +156,10 @@
 .ps-grid-scroll {
   width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+  overflow-x: scroll;
   padding-bottom: 0.5rem;
   box-sizing: border-box;
-  min-height: 430px; /* Reserve space for max 8 instructions to prevent vertical jumping */
+  min-height: 280px; /* Safely reserve space for 4 instructions + scrollbar */
 }
 
 
