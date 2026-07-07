@@ -105,7 +105,7 @@ Incremental readme - document your development (things done) in the readme (aha 
 
 ### Things to Be Done for the Final Submission
 
-WIP
+As it is, we believe the Virtual Exhibit satisfies all the given requirements. Proper website layout, complete and correct technical contents with trusted references, READMe documentation of the exhibit and process, complete interactive elements, and the disclosure of AI usage. Before the final submission, we shall review the technical content and simulations to see if anything could be refined or expanded, but for the mid-milestone submission, we believe the website is complete and will require minimal, if any, changes for the final submission. 
 
 
 ### Disclosure on Usage of AI and LLM
