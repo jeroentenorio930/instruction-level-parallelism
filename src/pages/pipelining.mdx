@@ -5,19 +5,17 @@ author: "HIZON, Allen; INFANTE, Charles; MARQUEZ, Jose Miguel; SY, Justin; TENOR
 readingTime: "8 minute read"
 ---
 
-{/* We import various Astro and React components */}
 import TextWithImage from "../components/TextWithImage.astro"
+import SequentialSim from "../components/SequentialSim.tsx"
+import PipelinedSim from "../components/PipelinedSim.tsx"
+import HazardFlushSim from "../components/HazardFlushSim.tsx"
+import HazardStallSim from "../components/HazardStallSim.tsx"
 
-{/* import "../styles/retro-blueprint-theme.css" */}
 import "../styles/neobrutalist-theme.css" 
+import "../styles/pipeline-theme.css"
 
-{/* Images have to be imported manually */}
 import cpuThumb from "../assets/cpu-placeholder.png"
 import assemblyLine from "../assets/assembly-placeholder.png"
-
-{/* Used for the ImageGallery component */}
-
-{/* Actual content */}
 
 # Introduction to Instruction Level Parallelism
 
@@ -39,81 +37,69 @@ modern hardware resolves those conflicts automatically.
 ## Why Pipelining Exists: The Sequential Bottleneck
 
 <TextWithImage
-  body="Input Text Here."
+  body="Before pipelining, processors executed instructions in a strictly sequential manner. Each instruction had to go through all five stages of execution—Fetch, Decode, Execute, Memory Access, and Write-back—before the next instruction could even begin. This meant that at any given moment, only one hardware unit was active while the rest sat idle, creating a severe performance bottleneck."
   imageSrc={assemblyLine.src}
   imageAlt="Diagram of sequential execution bottleneck"
   reverse={true}
 />
 
-Input Text Here
+With non-pipelined execution, if an instruction takes 5 clock cycles to complete, a sequence of $N$ instructions will take $5N$ cycles. Increasing the instruction load directly multiplies the execution time, leaving the hardware units utilized only 20% of the time on average.
+
+Use the simulator below to visualize sequential execution. Adjust the instruction count slider to see how execution time scales.
+
+<SequentialSim client:visible />
 
 ## What is Pipelining?
 
-Input Text Here
+Pipelining is a technique that enables the CPU to overlap the execution of multiple instructions, much like an assembly line in a factory. Instead of waiting for one instruction to finish completely, the processor begins fetching the next instruction as soon as the current one moves to the next stage.
 
-1. **Fetch (F):** Grab the instruction from memory.
+Modern processors divide instruction execution into five classic stages:
+
+1. **Fetch (F):** Grab the instruction from instruction memory.
 2. **Decode (D):** Figure out what the instruction means and read the required registers.
-3. **Execute (E):** Perform the mathematical or logical operation.
-4. **Memory (M):** Read from or write to data memory.
-5. **Write-back (WB):** Save the final result to a register.
+3. **Execute (E):** Perform the mathematical, logical, or address calculation in the ALU.
+4. **Memory (M):** Read from or write data to data memory (if applicable).
+5. **Write-back (WB):** Save the final result back to the register file.
 
-Input Text Here
+In an ideal pipeline, a new instruction is completed every clock cycle once the pipeline is full. A sequence of $N$ instructions takes only $4 + N$ cycles to execute, achieving a near-5x speedup over sequential execution for large instruction counts.
 
-Input Text Here: intro to the interactive element!
+Compare the pipelined execution below to the sequential model above. Notice how instructions stagger diagonally and how hardware stage utilization reaches up to 100% when the pipeline is fully filled.
 
-{/*
-  INTERACTIVE ELEMENT (to be added):
-  Non-pipelined vs. pipelined execution simulator.
-  - Slider controls the number of instructions.
-  - Toggle between "pipelining off" (sequential, one instruction fully
-    completes before the next begins) and "pipelining on" (overlapped,
-    matches the table above).
-  - Displays total cycles/time for each mode side-by-side so the user can
-    see the speedup grow as instruction count increases.
-  This section's static table above is a placeholder explanation until
-  that simulation is built.
-*/}
+<PipelinedSim client:visible />
 
 ## The Danger: Pipeline Hazards
 
-Input text Here
+Although pipelining increases performance, it introduces **hazards**—situations where the next instruction cannot execute in the designated clock cycle. Hazards force the CPU to stall or discard instructions, reducing overall throughput.
 
 ### Data Hazards
 
-Input text Here
+A data hazard occurs when an instruction depends on the result of a previous instruction that has not yet completed execution. For example, if a `SUB` instruction needs to read register `R1` which is currently being computed by a preceding `ADD` instruction, the pipeline must ensure the correct value is ready before `SUB` executes.
 
 ### Branch Hazards (Control Hazards)
 
-Input text Here
+A branch hazard occurs when the pipeline fetches conditional branch instructions (like `BEQ`). Because the target address and outcome of the branch are not known until later stages (Execute or Memory), the CPU does not know which instruction to fetch next. 
 
-{/*
-  INTERACTIVE ELEMENT (to be added later):
-  Hazard scenario simulator.
-  - Lets the user place a data hazard between two chosen instructions and
-    watch the RAW conflict highlighted on the pipeline diagram.
-  - Lets the user trigger a branch and choose whether it is predicted
-    correctly or mispredicted, visualizing the resulting instruction fetch.
-  This section's code snippet and explanation above are the static
-  placeholder until that simulation is built.
-*/}
+If the branch prediction guesses incorrectly, the wrong instructions will enter the pipeline. Once the misprediction is detected, those incorrect instructions must be **flushed** (turned into NOPs) to prevent them from modifying register or memory state, causing a cycle penalty.
+
+Watch the simulation below to trace how a branch misprediction forces the processor to flush in-flight instructions.
+
+<HazardFlushSim client:visible />
 
 ## Solutions: Hardware Interventions
 
-Input text Here
+To resolve hazards, CPU hardware can inject stalls (bubbles) to delay dependent instructions. Stalls, however, waste valuable execution cycles. Modern processors implement advanced hardware optimizations to maintain peak efficiency:
 
-{/*
-  INTERACTIVE ELEMENT (to be added later):
-  Stall vs. flush cost simulator.
-  - User selects where a data hazard occurs; simulation shows the pipeline
-    stalling (bubble inserted) versus forwarding (no stall) for comparison.
-  - User triggers a branch misprediction and sees the flush clear the
-    in-flight incorrect instructions, with the resulting cycle cost
-    displayed alongside the stall cost above for direct comparison.
-*/}
+1. **Data Forwarding (Bypassing):** Routes the execution result directly from the ALU output back to the ALU input for subsequent instructions, bypassing the write-back stage and avoiding stalls.
+2. **Branch Prediction:** Hardware predicts whether a branch will be taken or not, fetching the predicted path to keep the pipeline full. Flushes only happen on a misprediction.
+
+Toggle data forwarding in the simulator below to compare how the CPU stalls to resolve data dependencies versus how forwarding paths bypass those stalls to save execution time.
+
+<HazardStallSim client:visible />
 
 ## Summary
 
-Input text Here
+Instruction-Level Parallelism via pipelining is the foundation of high-performance processor design. While overlapping instruction execution dramatically increases throughput, hardware designers must implement complex mechanisms like forwarding paths, interlocks, and branch predictors to manage hazards and keep the execution units running at maximum efficiency.
 
 ## References
-* *References will be expanded as development continues.*
+* Patterson, D. A., & Hennessy, J. L. (2017). *Computer Organization and Design: The Hardware/Software Interface RISC-V Edition*. Morgan Kaufmann.
+* Stallings, W. (2016). *Computer Organization and Architecture*. Pearson.
