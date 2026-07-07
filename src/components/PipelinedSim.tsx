@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { generatePipelinedGrid } from './pipelineUtils';
 import PipelineGrid from './PipelineGrid';
 
-const MAX_INSTRUCTIONS = 4;
-const MAX_CYCLES = 4 + MAX_INSTRUCTIONS; // 8
+const MAX_INSTRUCTIONS = 6;
+const MAX_CYCLES = 4 + MAX_INSTRUCTIONS; // 10
 
 export default function PipelinedSim() {
   const [instructionCount, setInstructionCount] = useState<number>(4);
@@ -136,7 +136,7 @@ export default function PipelinedSim() {
         <input
           type="range"
           min="1"
-          max="4"
+          max="6"
           step="1"
           value={instructionCount}
           onChange={(e) => setInstructionCount(parseInt(e.target.value))}
