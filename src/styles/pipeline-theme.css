@@ -149,38 +149,6 @@ h3 {
   box-shadow: 0 0 8px rgba(85, 255, 85, 0.3);
 }
 
-/* ---------- Grid Container ---------- */
-
-.ps-grid-wrapper {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.ps-grid-scroll {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: scroll;
-  padding-bottom: 0.5rem;
-  box-sizing: border-box;
-  min-height: 280px; /* Safely reserve space for 4 instructions + scrollbar */
-}
-
-
-.ps-grid-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-
-.ps-grid-scroll::-webkit-scrollbar-track {
-  background: var(--ps-bg-dark);
-  border-radius: 3px;
-}
-
-.ps-grid-scroll::-webkit-scrollbar-thumb {
-  background: var(--ps-border);
-  border-radius: 3px;
-}
-
 /* ---------- Grid Table ---------- */
 
 .ps-grid {
