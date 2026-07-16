@@ -6,9 +6,9 @@ export default function HazardFlushSim() {
   const [currentCycle, setCurrentCycle] = useState<number>(-1);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
-  const totalCycles = 9;
+  const totalCycles = 8; 
 
-  // Handle animation timer
+// Handle animation timer
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isAnimating) {
@@ -16,14 +16,14 @@ export default function HazardFlushSim() {
         setCurrentCycle((prev) => {
           if (prev >= totalCycles - 1) {
             setIsAnimating(false);
-            return -1;
+            return prev; // <-- CHANGED: This tells it to stay on the final cycle instead of resetting to -1
           }
           return prev + 1;
         });
       }, 1200);
     }
     return () => clearInterval(timer);
-  }, [isAnimating]);
+  }, [isAnimating, totalCycles]);
 
   const togglePlay = () => {
     if (currentCycle >= totalCycles - 1) {
@@ -52,12 +52,7 @@ export default function HazardFlushSim() {
     setCurrentCycle((prev) => (prev < totalCycles - 1 ? prev + 1 : prev));
   };
 
-  // Define instruction definitions for this branch hazard scenario
-  // Row 0: Instruction 1 (Branch)
-  // Row 1: Instruction 2 (Wrong Path 1)
-  // Row 2: Instruction 3 (Wrong Path 2)
-  // Row 3: Instruction 4 (Wrong Path 3)
-  // Row 4: Instruction 5 (Correct Path 1)
+  // Generate grid data: Branch resolves in Execute (E) stage at t2.
   const generateFlushGridData = (cycle: number): InstructionRow[] => {
     const rows: InstructionRow[] = [];
 
@@ -77,88 +72,67 @@ export default function HazardFlushSim() {
         r0Cells.push({ type: 'empty', label: '', cellCycle: c });
       }
     }
-    rows.push({ label: 'BEQ (Branch)', cells: r0Cells });
+    rows.push({ label: 'JCXZ L1', cells: r0Cells });
 
-    // Row 1: Wrong Path 1 (Starts at t1)
+    // Row 1: Wrong Path 1 (Speculatively fetched, flushed at t3)
     const r1Cells: CellData[] = [];
     for (let c = 0; c < totalCycles; c++) {
       if (c >= 1 && c < 6) {
         const stages = ['F', 'D', 'E', 'M', 'WB'] as const;
-        const isFlushed = cycle >= 4 && c >= 4;
+        const isFlushed = cycle >= 3 && c >= 3;
         r1Cells.push({
           type: 'stage',
           label: isFlushed ? 'nop' : stages[c - 1],
           stageName: isFlushed ? undefined : stages[c - 1],
           cellCycle: c,
-          isFaded: isFlushed || cycle === 3,
-          isFlushing: cycle === 4 && c >= 4,
+          isFaded: isFlushed || cycle === 2,
+          isFlushing: cycle === 3 && c >= 3,
           isHighlighted: cycle === c && !isFlushed,
         });
       } else {
         r1Cells.push({ type: 'empty', label: '', cellCycle: c });
       }
     }
-    rows.push({ label: 'ADD (Wrong)', cells: r1Cells });
+    rows.push({ label: 'INC AX', cells: r1Cells });
 
-    // Row 2: Wrong Path 2 (Starts at t2)
+    // Row 2: Wrong Path 2 (Speculatively fetched, flushed at t3)
     const r2Cells: CellData[] = [];
     for (let c = 0; c < totalCycles; c++) {
       if (c >= 2 && c < 7) {
         const stages = ['F', 'D', 'E', 'M', 'WB'] as const;
-        const isFlushed = cycle >= 4 && c >= 4;
+        const isFlushed = cycle >= 3 && c >= 3;
         r2Cells.push({
           type: 'stage',
           label: isFlushed ? 'nop' : stages[c - 2],
           stageName: isFlushed ? undefined : stages[c - 2],
           cellCycle: c,
-          isFaded: isFlushed || cycle === 3,
-          isFlushing: cycle === 4 && c >= 4,
+          isFaded: isFlushed || cycle === 2,
+          isFlushing: cycle === 3 && c >= 3,
           isHighlighted: cycle === c && !isFlushed,
         });
       } else {
         r2Cells.push({ type: 'empty', label: '', cellCycle: c });
       }
     }
-    rows.push({ label: 'SUB (Wrong)', cells: r2Cells });
+    rows.push({ label: 'DEC BX', cells: r2Cells });
 
-    // Row 3: Wrong Path 3 (Starts at t3)
+    // Row 3: Correct Path (Starts at t3 after flush)
     const r3Cells: CellData[] = [];
     for (let c = 0; c < totalCycles; c++) {
-      if (c >= 3 && c < 8) {
+      if (cycle >= 3 && c >= 3 && c < 8) {
         const stages = ['F', 'D', 'E', 'M', 'WB'] as const;
-        const isFlushed = cycle >= 4 && c >= 4;
         r3Cells.push({
           type: 'stage',
-          label: isFlushed ? 'nop' : stages[c - 3],
-          stageName: isFlushed ? undefined : stages[c - 3],
+          label: stages[c - 3],
+          stageName: stages[c - 3],
           cellCycle: c,
-          isFaded: isFlushed || cycle === 3,
-          isFlushing: cycle === 4 && c >= 4,
-          isHighlighted: cycle === c && !isFlushed,
+          isHighlighted: cycle === c,
         });
       } else {
         r3Cells.push({ type: 'empty', label: '', cellCycle: c });
       }
     }
-    rows.push({ label: 'AND (Wrong)', cells: r3Cells });
-
-    // Row 4: Correct Path 1 (Starts at t4 after flush)
-    const r4Cells: CellData[] = [];
-    for (let c = 0; c < totalCycles; c++) {
-      if (cycle >= 4 && c >= 4 && c < 9) {
-        const stages = ['F', 'D', 'E', 'M', 'WB'] as const;
-        r4Cells.push({
-          type: 'stage',
-          label: stages[c - 4],
-          stageName: stages[c - 4],
-          cellCycle: c,
-          isHighlighted: cycle === c,
-        });
-      } else {
-        r4Cells.push({ type: 'empty', label: '', cellCycle: c });
-      }
-    }
-    rows.push({ label: 'OR (Correct)', cells: r4Cells });
+    rows.push({ label: 'L1: MOV CX, 5', cells: r3Cells });
 
     return rows;
   }
@@ -166,34 +140,23 @@ export default function HazardFlushSim() {
   const timeCycles = Array.from({ length: totalCycles }, (_, i) => i);
   const rows = generateFlushGridData(currentCycle);
 
-  // Status message based on current cycle
   let explanation = 'Press Play or Step Forward to trace the branch hazard scenario.';
   if (currentCycle === 0) {
-    explanation = 'Cycle 1 (t0): Branch instruction (BEQ) is fetched (F stage).';
+    explanation = 'Cycle 1 (t0): JCXZ L1 is fetched (F stage). The CPU does not know if CX is 0 yet.';
   } else if (currentCycle === 1) {
-    explanation = 'Cycle 2 (t1): BEQ is decoded. The hardware predicts branch taken and speculatively fetches ADD from wrong path.';
+    explanation = 'Cycle 2 (t1): JCXZ is decoded. Hardware speculatively fetches INC AX, assuming no jump.';
   } else if (currentCycle === 2) {
-    explanation = 'Cycle 3 (t2): BEQ executes. ADD decoded, and a second wrong-path instruction (SUB) is fetched.';
+    explanation = 'Cycle 3 (t2): JCXZ executes! The ALU checks the Zero Flag (ZF). It is 1! The jump must happen, misprediction detected!';
   } else if (currentCycle === 3) {
-    explanation = 'Cycle 4 (t3): BEQ resolves condition in Memory (M). A branch misprediction is detected! The pipeline must be flushed.';
-  } else if (currentCycle === 4) {
-    explanation = 'Cycle 5 (t4): Flush occurs! The wrong-path instructions (ADD, SUB, AND) are converted to NOPs. Correct instruction (OR) is fetched.';
-  } else if (currentCycle >= 5) {
-    explanation = `Cycle ${currentCycle + 1} (t${currentCycle}): The correct instruction path (OR) proceeds down the pipeline.`;
+    explanation = 'Cycle 4 (t3): Flush! INC AX and DEC BX are converted to NOPs. The correct instruction (L1: MOV CX, 5) is fetched.';
+  } else if (currentCycle >= 4) {
+    explanation = `Cycle ${currentCycle + 1} (t${currentCycle}): The correct instruction path proceeds down the pipeline.`;
   }
 
-  // Draw overlay arrow for cycle 3 & 4 (flush detection & redirection)
-  const showOverlay = currentCycle === 3 || currentCycle === 4;
+  const showOverlay = currentCycle === 2 || currentCycle === 3;
 
   const renderSVGOverlay = () => {
     if (!showOverlay) return null;
-
-    // Fixed absolute pixel positioning matching table cells:
-    // Left offset = 80px (label width) + 6px (spacing) = 86px
-    // Column 3 start = 86 + 3 * 58 = 260px. Center of t3 = 260 + 26 = 286px.
-    // Row 0 center = Header (approx 40px) + 0.5 * 50 = 65px
-    // Row 4 start = Header + 4 * 50 = 240px. Top of Row 4 = 240px.
-    // Column 4 start = 86 + 4 * 58 = 318px. Center of t4 = 318 + 26 = 344px.
 
     return (
       <svg
@@ -216,15 +179,14 @@ export default function HazardFlushSim() {
             refY="5"
             orient="auto-start-reverse"
           >
-            <path d="M0,1 L10,5 L0,9 F" className="ps-flush-arrowhead" />
+            <path d="M0,1 L10,5 L0,9 Z" className="ps-flush-arrowhead" />
           </marker>
         </defs>
-        {/* Draw diagonal arrow from BEQ (M stage at t3) to OR (F stage at t4) */}
         <path
-          d="M 286,75 Q 300,120 344,242"
+          d="M 280,70 L 320,190"
           fill="none"
           stroke="#FF5555"
-          strokeWidth="3"
+          strokeWidth="2"
           strokeDasharray="5,3"
           markerEnd="url(#flush-arrowhead)"
           className="ps-flush-arrow"
@@ -237,7 +199,7 @@ export default function HazardFlushSim() {
   return (
     <div className="pipeline-sim">
       <div className="ps-header">
-        <h3 className="ps-title">Branch Misprediction & Pipeline Flush</h3>
+        <h3 className="ps-title">Branch Misprediction</h3>
         <div className="ps-controls">
           <button className="ps-btn ps-btn--danger" onClick={togglePlay}>
             {isAnimating ? '⏸ Pause' : '▶ Play'}
@@ -256,10 +218,10 @@ export default function HazardFlushSim() {
 
       <div className="ps-steps">
         <div className={`ps-step-dot ${currentCycle >= 0 ? 'ps-step-dot--done' : ''}`} />
-        <div className={`ps-step-dot ${currentCycle >= 3 ? 'ps-step-dot--active' : ''}`} />
-        <div className={`ps-step-dot ${currentCycle >= 4 ? 'ps-step-dot--done' : ''}`} />
+        <div className={`ps-step-dot ${currentCycle >= 2 ? 'ps-step-dot--active' : ''}`} />
+        <div className={`ps-step-dot ${currentCycle >= 3 ? 'ps-step-dot--done' : ''}`} />
         <span className="ps-step-label">
-          {currentCycle === 3 ? '🚨 MISPREDICTION DETECTED' : currentCycle === 4 ? '🌊 FLUSH ACTIVE' : 'MONITORING'}
+          {currentCycle === 2 ? '🚨 ALU DETECTS ZF==1' : currentCycle === 3 ? '🌊 FLUSH ACTIVE' : 'MONITORING'}
         </span>
       </div>
 
@@ -271,35 +233,35 @@ export default function HazardFlushSim() {
           overlays={renderSVGOverlay()}
         />
 
-        {currentCycle === 3 && (
+        {currentCycle === 2 && (
           <div
             className="ps-annotation"
             style={{
               top: '80px',
-              left: '260px',
+              left: '200px',
               border: '1px solid var(--ps-red)',
               background: '#03071E',
               color: '#FF5555',
               boxShadow: '0 0 10px rgba(255, 85, 85, 0.4)',
             }}
           >
-            Branch Misprediction!
+            Zero Flag Checked!
           </div>
         )}
 
-        {currentCycle === 4 && (
+        {currentCycle === 3 && (
           <div
             className="ps-annotation"
             style={{
               top: '120px',
-              left: '180px',
+              left: '140px',
               border: '1px solid var(--ps-cyan)',
               background: '#03071E',
               color: '#55FFFF',
               boxShadow: '0 0 10px rgba(85, 255, 255, 0.4)',
             }}
           >
-            Pipeline Flushed (NOPs injected)
+            Wrong instructions NOP'd!
           </div>
         )}
       </div>
@@ -312,24 +274,18 @@ export default function HazardFlushSim() {
         <div className="ps-stat">
           <span className="ps-stat__label">Scenario Status</span>
           <span className="ps-stat__value ps-stat__value--cyan">
-            {currentCycle === -1 ? 'INITIAL' : currentCycle >= 4 ? 'FLUSH COMPLETED' : 'SPECULATIVE FETCH'}
+            {currentCycle === -1 ? 'INITIAL' : currentCycle >= 3 ? 'FLUSH COMPLETED' : 'SPECULATIVE FETCH'}
           </span>
         </div>
         <div className="ps-stat">
           <span className="ps-stat__label">Flush Penalty</span>
           <span className="ps-stat__value ps-stat__value--danger">
-            {currentCycle >= 4 ? '3 Cycles Wasted' : 'Checking...'}
-          </span>
-        </div>
-        <div className="ps-stat">
-          <span className="ps-stat__label">Resulting NOPs</span>
-          <span className="ps-stat__value ps-stat__value--highlight">
-            {currentCycle >= 4 ? '3 instructions flushed' : '0'}
+            {currentCycle >= 3 ? '2 Cycles Wasted' : 'Checking...'}
           </span>
         </div>
         <div className="ps-stat" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
-          <span className={`ps-badge ${currentCycle >= 3 && currentCycle <= 4 ? 'ps-badge--warning' : ''}`}>
-            {currentCycle === 3 ? '⚠️ Hazard Triggered' : 'Branch Hazard Demo'}
+          <span className={`ps-badge ${currentCycle >= 2 && currentCycle <= 3 ? 'ps-badge--warning' : ''}`}>
+            {currentCycle === 2 ? '⚠️ E-Stage Detects Jump' : 'Branch Hazard Demo'}
           </span>
         </div>
       </div>

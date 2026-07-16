@@ -9,7 +9,10 @@ import TextWithImage from "../components/TextWithImage.astro"
 import SequentialSim from "../components/SequentialSim.tsx"
 import PipelinedSim from "../components/PipelinedSim.tsx"
 import HazardFlushSim from "../components/HazardFlushSim.tsx"
-import HazardStallSim from "../components/HazardStallSim.tsx"
+import HazardForwardingSim from "../components/HazardForwardingSim.tsx"
+import HazardNoForwardingSim from "../components/HazardNoForwardingSim.tsx"
+import HazardLoadUseSim from "../components/HazardLoadUseSim.tsx"
+
 
 import "../styles/neobrutalist-theme.css" 
 import "../styles/pipeline-theme.css"
@@ -52,34 +55,74 @@ Compare the pipelined execution below to the sequential model above. Notice how 
 
 <PipelinedSim client:visible />
 
-## The Danger: Pipeline Hazards
+## Hazards of Pipelining
 
 Although pipelining increases performance, it introduces **hazards**—situations where the next instruction cannot execute in the designated clock cycle. Hazards force the CPU to stall or discard instructions, reducing overall throughput.
 
-### Data Hazards
+## Data Hazards & Forwarding
 
-A data hazard occurs when an instruction depends on the result of a previous instruction that has not yet completed execution. For example, if a `SUB` instruction needs to read register `R1` which is currently being computed by a preceding `ADD` instruction, the pipeline must ensure the correct value is ready before `SUB` executes.
+A **data hazard** occurs when instructions are so close together that one instruction needs a piece of data before a previous instruction has finished computing it. 
 
-### Branch Hazards (Control Hazards)
+Given this SASM instruction sequence:
 
-A branch hazard occurs when the pipeline fetches conditional branch instructions (like `BEQ`). Because the target address and outcome of the branch are not known until later stages (Execute or Memory), the CPU does not know which instruction to fetch next. 
+```
 
-If the branch prediction guesses incorrectly, the wrong instructions will enter the pipeline. Once the misprediction is detected, those incorrect instructions must be **flushed** (turned into NOPs) to prevent them from modifying register or memory state, causing a cycle penalty.
+    MOV AX, 10
+    MOV BX, 20
+    ADD AX, BX
+    SUB CX, 5
 
-Watch the simulation below to trace how a branch misprediction forces the processor to flush in-flight instructions.
 
-<HazardFlushSim client:visible />
+```
 
-## Solutions: Hardware Interventions
+In a basic pipeline, the processor handles this safely but slowly. The `ADD` instruction depends on the results of the two `MOV` instructions, so it must pause—or **stall**—in the Decode stage. It simply waits there until the older instructions complete their final **Write-Back (WB)** stage to update the register file. Only then can the `ADD` instruction grab the data and proceed, creating dead cycles (bubbles) in the pipeline.
 
-To resolve hazards, CPU hardware can inject stalls (bubbles) to delay dependent instructions. Stalls, however, waste valuable execution cycles. Modern processors implement advanced hardware optimizations to maintain peak efficiency:
+<HazardNoForwardingSim client:visible/>
 
-1. **Data Forwarding (Bypassing):** Routes the execution result directly from the ALU output back to the ALU input for subsequent instructions, bypassing the write-back stage and avoiding stalls.
-2. **Branch Prediction:** Hardware predicts whether a branch will be taken or not, fetching the predicted path to keep the pipeline full. Flushes only happen on a misprediction.
+Modern CPUs solve this using **forwarding**. Instead of waiting for the data to be written all the way back to the registers, the CPU routes the computed data values from one instruction to the next *internally*. The moment the data is ready, it is forwarded directly to the ALU's input for the `ADD` instruction. This ensures the data is available exactly when `ADD` reaches its Execute step, eliminating the need to stall.
 
-Toggle data forwarding in the simulator below to compare how the CPU stalls to resolve data dependencies versus how forwarding paths bypass those stalls to save execution time.
+<HazardForwardingSim client:visible/>
 
-<HazardStallSim client:visible />
+Forwarding is brilliant, but it cannot bend time. Forwarding is not possible if the data value comes from a memory label:
+
+```
+
+    MOV AX, [ALPHA]
+    ADD BX, AX
+
+
+```
+
+Because fetching `[ALPHA]` happens in Step 4 (Memory), the data physically cannot be obtained before the Execute step (Step 3) of the dependent `ADD` instruction. In this specific scenario, the hardware is forced to inject a mandatory 1-cycle stall even with forwarding enabled.
+
+<HazardLoadUseSim client:visible/>
+
+## Control Hazards & Branch Prediction
+
+A **control hazard** (or branch hazard) occurs when the CPU encounters a branching instruction and doesn't know which instructions to fetch next. 
+
+Given this SASM instruction sequence:
+
+```
+
+    JCXZ L1
+    INC AX
+    DEC BX
+
+ L1: MOV CX, 5
+
+
+```
+
+When the processor fetches `JCXZ L1`, it does not know if `CX` is zero yet. The CPU refuses to sit idle, so it speculatively fetches `INC AX` and `DEC BX`, **guessing the jump won't happen**.
+
+However, the instruction must reach the **Execute (E)** step for the ALU to check the Zero Flag (`ZF`). 
+
+If the flag is 1, the CPU realizes it guessed wrong! It must initiate a **Pipeline Flush**. It instantly converts the speculatively fetched `INC AX` and `DEC BX` into `NOP`s (bubbles) inside the pipeline, preventing them from modifying any registers, and redirects the fetch stage to `L1: MOV CX, 5`.
+
+*Trace the exact sequence above using the simulator below. Notice how the misprediction is detected in the Execute stage, triggering a flush of the wrong path.*
+
+<HazardFlushSim client:visible/>
 
 ## Summary
 
