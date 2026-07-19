@@ -116,9 +116,9 @@ Given this SASM instruction sequence:
 
 When the processor fetches `JCXZ L1`, it does not know if `CX` is zero yet. The CPU refuses to sit idle, so it speculatively fetches `INC AX` and `DEC BX`, **guessing the jump won't happen**.
 
-However, the instruction must reach the **Execute (E)** step for the ALU to check the Zero Flag (`ZF`). 
+However, the instruction must reach the **Execute (E)** step for the ALU to test the actual contents of `CX` directly against 0.
 
-If the flag is 1, the CPU realizes it guessed wrong! It must initiate a **Pipeline Flush**. It instantly converts the speculatively fetched `INC AX` and `DEC BX` into `NOP`s (bubbles) inside the pipeline, preventing them from modifying any registers, and redirects the fetch stage to `L1: MOV CX, 5`.
+If `CX` turns out to be 0, the CPU realizes it guessed wrong! It must initiate a **Pipeline Flush**. It instantly converts the speculatively fetched `INC AX` and `DEC BX` into `NOP`s (bubbles) inside the pipeline, preventing them from modifying any registers, and redirects the fetch stage to `L1: MOV CX, 5`.
 
 *Trace the exact sequence above using the simulator below. Notice how the misprediction is detected in the Execute stage, triggering a flush of the wrong path.*
 
@@ -131,3 +131,5 @@ Instruction-Level Parallelism via pipelining is the foundation of high-performan
 ## References
 * Hennessy, J. L., & Patterson, D. A. (2017). Computer Architecture: A Quantitative Approach. Morgan Kaufmann.
 * Stallings, W. (2016). *Computer Organization and Architecture*. Pearson.
+* Cloutier, F. (n.d.). *Jcc — Jump if condition is met*. x86 and amd64 instruction reference. Retrieved from https://www.felixcloutier.com/x86/jcc
+* Intel Corporation. (1986). *80386 programmer's reference manual*. Retrieved from https://pdos.csail.mit.edu/6.828/2017/readings/i386/Jcc.htm
