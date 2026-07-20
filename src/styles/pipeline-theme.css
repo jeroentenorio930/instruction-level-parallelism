@@ -149,6 +149,91 @@ h3 {
   box-shadow: 0 0 8px rgba(85, 255, 85, 0.3);
 }
 
+/* ------------ CPU and Memory Classes ------------ */
+
+/* CPU Path Memory Container */
+.ps-main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+/* box border base */
+.ps-box {
+    padding: 1rem;
+    border-radius: 6px;
+    width: 140px;
+    text-align: center;
+    position: relative;
+}
+
+/* box border styles*/
+.ps-cpu {
+    border: 2px solid var(--ps-cyan);
+}
+
+.ps-mem {
+    border: 2px solid var(--ps-green);
+}
+
+/* place label top left */
+.ps-label {
+    position: absolute;
+    top: -12px;
+    left: 12px;
+    background: var(--ps-bg-mid, #1e1e1e);
+    padding: 0 8px;
+    font-size: 0.85rem;
+}
+
+/* path */
+.ps-path {
+    flex: 1;
+    position: relative;
+    margin: 0 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/* svg */
+.ps-svg {
+    width: 100%;
+    height: 20px;
+    overflow: visible;
+}
+
+/* line */
+.ps-exec-line {
+    stroke: var(--ps-cyan);
+    stroke-width: 2;
+}
+
+/* arrow facing right */
+.ps-exec-arrow {
+    fill: var(--ps-cyan);
+}
+
+/* Writeback CPU */
+.ps-cpu-container {
+    width: 100%;
+    border: 2px solid var(--ps-cyan);
+    border-radius: 6px;
+    padding: 1.5rem;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Control Unit inside Writeback */
+.ps-control-unit {
+    border: 1px solid var(--ps-cyan);
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
 /* ---------- Grid Table ---------- */
 
 .ps-grid {

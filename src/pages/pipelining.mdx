@@ -14,6 +14,7 @@ import HazardNoForwardingSim from "../components/HazardNoForwardingSim.tsx"
 import HazardLoadUseSim from "../components/HazardLoadUseSim.tsx"
 import Execute from "../components/Execute.tsx"
 import Memory from "../components/Memory.tsx"
+import Writeback from "../components/Writeback.tsx"
 
 
 import "../styles/neobrutalist-theme.css" 
@@ -33,6 +34,12 @@ This exhibit explores **pipelining**, the primary hardware technique CPUs use to
 
 Before going into the rest of the exhibit, we first need to introduce the 5 clock cycles done by the machine to perform a single instruction. These are Fetch, Decode, Execute, Memory, and Write-back.
 
+For the explanation of the 5 clock cycles lets assume that we are performing the instruction below. Where RAX is a register in the CPU (temporary storage) and var1 is located in the memory with the value 4.
+
+```
+    MOV RAX, [var1]
+```
+
 1. **Fetch (F):** The CPU fetches the instruction's encoded bits from memory (often shown in hexadecimal for readability) and brings it back to the CPU.
 
 {/* TODO: animation of fetching from memory */}
@@ -43,7 +50,6 @@ Before going into the rest of the exhibit, we first need to introduce the 5 cloc
 
 3. **Execute (E):** Now that the CPU understands the instruction, the CPU then executes it.
 
-{/* TODO: animation of doing the instruction */}
 <Execute client:visible />
 
 4. **Memory (M):** If the instruction involves getting a value from or storing a value into memory, the CPU needs to perform this extra cycle.
@@ -52,7 +58,7 @@ Before going into the rest of the exhibit, we first need to introduce the 5 cloc
 
 5. **Write-back (WB):** The CPU writes the final result, from either Execute or Memory cycle, back into the register file in the CPU.
 
-{/* TODO: animation of storing the result back to the register file */}
+<Writeback client:visible />
 
 ## Sequential Execution: The Flawed Predecessor
 
