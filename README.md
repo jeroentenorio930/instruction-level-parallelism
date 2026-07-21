@@ -107,6 +107,21 @@ Incremental readme - document your development (things done) in the readme (aha 
 
 As it is, we believe the Virtual Exhibit satisfies all the given requirements. Proper website layout, complete and correct technical contents with trusted references, READMe documentation of the exhibit and process, complete interactive elements, and the disclosure of AI usage. Before the final submission, we shall review the technical content and simulations to see if anything could be refined or expanded, but for the mid-milestone submission, we believe the website is complete and will require minimal, if any, changes for the final submission.
 
+### Feedback Received before Final Submission
+
+```
+1.) suggest for web: scaling the horizontal to fit the screen.  Currently has horizontal overflow.
+
+2.) Separate data hazard with branch hazard.  You can approach me for technical detail
+
+3.) Keep improving the web contents and interactive elements of your web apps.
+```
+
+### Final Submission Additions and Revisions
+
+- **Hazard Simulations (`HazardForwardingSim.tsx`, `HazardNoForwardingSim.tsx`, `HazardLoadUseSim.tsx`)**: Created simulations for Data Hazards showing how the CPU handles them both with and without forwarding, along with a simulation of a Load-Use hazard to showcase the limitations of forwarding.
+- **Horizontal Overflow Fix (`SequentialSim.tsx`)**: A little AHA! moment here too, we fixed the web scaling by preventing it from overflowing by adding a simple horizontal scrollbar. It's a simple fix but drastically improves the overall look of the simulation.
+
 ### Disclosure on Usage of AI and LLM
 
 AI was utilized to create the interactive elements of the simulation. All code generated was manually checked and reviewed, with issues being fixed through a combination of manual editing and reprompting. The technical contents of the presentation were manually edited and reviewed with trusted sources (Hennessy & Patterson, 2017), (Stallings, 2016).  
