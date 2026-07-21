@@ -78,7 +78,7 @@ export default function Execute() {
                         </span>
 
                         <span>
-                            some hex value
+                            0x488B_45??_????_????
                         </span>
                     </div>
 
