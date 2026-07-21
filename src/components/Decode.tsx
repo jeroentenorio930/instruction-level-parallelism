@@ -1,7 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function Decode() {
     const [step, setStep] = useState(0);
+    const timers = useRef<NodeJS.Timeout[]>([]);
+
+    function clearTimers() {
+        timers.current.forEach(clearTimeout);
+        timers.current = [];
+    }
+
+    useEffect(() => {
+        return clearTimers;
+    }, []);
 
     function meaningOfHex()
     {
@@ -15,16 +25,21 @@ export default function Decode() {
 
     function stopAnimation()
     {
+        clearTimers();
         setStep(0);
     };
 
     function playAnimation()
     {
-
         stopAnimation();
-        setTimeout(splitUp, 2500);
-        setTimeout(meaningOfHex, 5000);
+        timers.current.push(setTimeout(splitUp, 2500));
+        timers.current.push(setTimeout(meaningOfHex, 5000));
     };
+
+    function handleSliderChange(e: React.ChangeEvent<HTMLInputElement>) {
+        clearTimers();
+        setStep(parseInt(e.target.value));
+    }
 
     return (
         <div className="pipeline-sim">
@@ -41,6 +56,17 @@ export default function Decode() {
                     <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
                         Reset
                     </button>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
+                    <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
+                    <input 
+                        type="range" 
+                        min="0" 
+                        max="2" 
+                        value={step} 
+                        onChange={handleSliderChange}
+                        style={{ flex: 1, cursor: 'pointer' }}
+                    />
                 </div>
             </div>
 

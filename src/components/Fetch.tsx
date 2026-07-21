@@ -1,7 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function Fetch() {
     const [step, setStep] = useState(0);
+    const timers = useRef<NodeJS.Timeout[]>([]);
+
+    function clearTimers() {
+        timers.current.forEach(clearTimeout);
+        timers.current = [];
+    }
+
+    useEffect(() => {
+        return clearTimers;
+    }, []);
 
     function instructionInCPU()
     {
@@ -20,17 +30,23 @@ export default function Fetch() {
 
     function stopAnimation()
     {
+        clearTimers();
         setStep(0);
     };
 
     function playAnimation()
     {
         stopAnimation();
-        setTimeout(highlightInstruction, 2500);
-        setTimeout(showLine, 5000);
-        setTimeout(instructionInCPU, 7500);
+        timers.current.push(setTimeout(highlightInstruction, 2500));
+        timers.current.push(setTimeout(showLine, 5000));
+        timers.current.push(setTimeout(instructionInCPU, 7500));
         
     };
+
+    function handleSliderChange(e: React.ChangeEvent<HTMLInputElement>) {
+        clearTimers();
+        setStep(parseInt(e.target.value));
+    }
 
     return (
         <div className="pipeline-sim">
@@ -47,6 +63,17 @@ export default function Fetch() {
                     <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
                         Reset
                     </button>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
+                    <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
+                    <input 
+                        type="range" 
+                        min="0" 
+                        max="3" 
+                        value={step} 
+                        onChange={handleSliderChange}
+                        style={{ flex: 1, cursor: 'pointer' }}
+                    />
                 </div>
             </div>
 
