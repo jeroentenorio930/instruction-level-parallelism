@@ -149,7 +149,7 @@ h3 {
   box-shadow: 0 0 8px rgba(85, 255, 85, 0.3);
 }
 
-/* ------------ CPU and Memory Classes ------------ */
+/* ------------ FETCH EXECUTE MEMORY Classes ------------ */
 
 /* CPU Path Memory Container */
 .ps-main-container {
@@ -159,7 +159,7 @@ h3 {
     padding: 2rem 0;
 }
 
-/* Shared box base (sizes removed) */
+/* Box Skeleton */
 .ps-box {
     padding: 1rem;
     border-radius: 6px;
@@ -167,16 +167,31 @@ h3 {
     position: relative;
 }
 
-/* CPU specific styles & size */
+/* CPU Style Size */
 .ps-cpu {
-    width: 140px;
+    width: 160px;
     border: 2px solid var(--ps-cyan);
 }
 
-/* Memory specific styles & size (Bigger) */
+/* Memory Style Size */
 .ps-mem {
-    width: 280px;
+    width: 300px;
     border: 2px solid var(--ps-green);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem 1rem;
+    position: relative;
+}
+
+/* row container */
+.ps-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-family: monospace;
+    font-size: 0.9rem;
 }
 
 /* place label top left */
@@ -216,6 +231,7 @@ h3 {
     fill: var(--ps-cyan);
 }
 
+/* ------------ DECODE WRITEBACK Classes ------------ */
 /* Writeback CPU */
 .ps-cpu-container {
     width: 100%;
