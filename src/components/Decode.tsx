@@ -5,12 +5,12 @@ export default function Decode() {
 
     function meaningOfHex()
     {
-        setStep(3);
+        setStep(2);
     };
 
     function splitUp()
     {
-        setStep(2);
+        setStep(1);
     };
 
     function stopAnimation()
@@ -20,10 +20,10 @@ export default function Decode() {
 
     function playAnimation()
     {
-        setStep(1);
-        setTimeout(splitUp, 1500);
-        setTimeout(meaningOfHex, 3000);
-        setTimeout(stopAnimation, 10000);
+
+        stopAnimation();
+        setTimeout(splitUp, 2500);
+        setTimeout(meaningOfHex, 5000);
     };
 
     return (
@@ -33,13 +33,19 @@ export default function Decode() {
                     Cycle 2: Decode (D)
                 </h3>
                 
-                <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
-                    Play
-                </button>
+                <div className='ps-btn-container'>
+                    <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
+                        Play
+                    </button>
+
+                    <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
+                        Reset
+                    </button>
+                </div>
             </div>
 
             {/* WHO ARE YOU? Explanations */}
-            {step == 3 && (
+            {step == 2 && (
                 <div className="ps-explanation-row">
                     <div className="ps-explanation-box" style={{ borderColor: 'var(--ps-yellow)' }}>
                         <div className="ps-explanation-label" style={{ color: 'var(--ps-yellow)' }}>
@@ -81,14 +87,18 @@ export default function Decode() {
                         Control Unit
                     </div>
 
-                    {(step == 0 || step == 1) && (
+                    {(step == 0) && (
                         <div className="ps-badge">
                             0x48_8B05_7F00_0000
                         </div>
                     )}
 
-                    {(step == 2 || step == 3) && (
+                    {(step == 1 || step == 2) && (
                         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', whiteSpace: 'nowrap' }}>
+                            <div className="ps-badge" style={{ color: 'var(--ps-yellow)', borderColor: 'var(--ps-muted)' }}>
+                                0x
+                            </div>
+
                             <div className="ps-badge" style={{ color: 'var(--ps-yellow)', borderColor: 'var(--ps-yellow)' }}>
                                 48
                             </div>

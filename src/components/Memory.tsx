@@ -13,6 +13,11 @@ export default function Memory() {
         setStep(2);
     };
 
+    function highlightValue()
+    {
+        setStep(1);
+    }
+
     function stopAnimation()
     {
         setStep(0);
@@ -20,10 +25,10 @@ export default function Memory() {
 
     function playAnimation()
     {
-        setStep(1);
-        setTimeout(showLine, 2000);
-        setTimeout(var1InCPU, 4000);
-        setTimeout(stopAnimation, 6000);
+        stopAnimation();
+        setTimeout(highlightValue, 2500);
+        setTimeout(showLine, 5000);
+        setTimeout(var1InCPU, 7500);
     };
 
     return (
@@ -33,9 +38,15 @@ export default function Memory() {
                     Cycle 4: Memory (M)
                 </h3>
                 
-                <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
-                    Play
-                </button>
+                <div className='ps-btn-container'>
+                    <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
+                        Play
+                    </button>
+
+                    <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
+                        Reset
+                    </button>
+                </div>
             </div>
 
             <div className='ps-main-container'>

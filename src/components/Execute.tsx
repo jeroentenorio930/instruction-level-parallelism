@@ -11,6 +11,11 @@ export default function Execute() {
         setStep(2);
     };
 
+    function popQuestion()
+    {
+        setStep(1);
+    }
+
     function stopAnimation()
     {
         setStep(0);
@@ -18,9 +23,9 @@ export default function Execute() {
 
     function playAnimation()
     {
-        setStep(1);
-        setTimeout(showLine, 2000);
-        setTimeout(stopAnimation, 5000);
+        stopAnimation();
+        setTimeout(popQuestion, 2500);
+        setTimeout(showLine, 5000);
     };
 
     return (
@@ -30,9 +35,15 @@ export default function Execute() {
                     Cycle 3: Execute (E)
                 </h3>
                 
-                <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
-                    Play
-                </button>
+                <div className='ps-btn-container'>
+                    <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
+                        Play
+                    </button>
+
+                    <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
+                        Reset
+                    </button>
+                </div>
             </div>
 
             <div className='ps-main-container'>

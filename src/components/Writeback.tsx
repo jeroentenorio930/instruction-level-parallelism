@@ -13,6 +13,11 @@ export default function Writeback() {
         setStep(2);
     };
 
+    function highlightValue()
+    {
+        setStep(1);
+    }
+
     function stopAnimation()
     {
         setStep(0);
@@ -20,10 +25,10 @@ export default function Writeback() {
 
     function playAnimation()
     {
-        setStep(1);
-        setTimeout(showLine, 1500);
-        setTimeout(var1InReg, 3000)
-        setTimeout(stopAnimation, 5000)
+        stopAnimation();
+        setTimeout(highlightValue, 1500);
+        setTimeout(showLine, 3000)
+        setTimeout(var1InReg, 5000)
     };
 
     return (
@@ -33,9 +38,15 @@ export default function Writeback() {
                     Cycle 5: Writeback (WB)
                 </h3>
                 
-                <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
-                    Play
-                </button>
+                <div className='ps-btn-container'>
+                    <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
+                        Play
+                    </button>
+
+                    <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
+                        Reset
+                    </button>
+                </div>
             </div>
 
             {/* WHO ARE YOU? CPU*/}

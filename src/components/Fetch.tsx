@@ -13,6 +13,11 @@ export default function Fetch() {
         setStep(2);
     };
 
+    function highlightInstruction()
+    {
+        setStep(1);
+    }
+
     function stopAnimation()
     {
         setStep(0);
@@ -20,10 +25,11 @@ export default function Fetch() {
 
     function playAnimation()
     {
-        setStep(1);
-        setTimeout(showLine, 2000);
-        setTimeout(instructionInCPU, 4000);
-        setTimeout(stopAnimation, 6000);
+        stopAnimation();
+        setTimeout(highlightInstruction, 2500);
+        setTimeout(showLine, 5000);
+        setTimeout(instructionInCPU, 7500);
+        
     };
 
     return (
@@ -33,9 +39,15 @@ export default function Fetch() {
                     Cycle 1: Fetch (F)
                 </h3>
                 
-                <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
-                    Play
-                </button>
+                <div className='ps-btn-container'>
+                    <button className="ps-btn ps-btn--success" onClick={() => playAnimation()}>
+                        Play
+                    </button>
+
+                    <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
+                        Reset
+                    </button>
+                </div>
             </div>
 
             <div className='ps-main-container'>

@@ -301,6 +301,11 @@ h3 {
     font-size: 0.85rem;
 }
 
+.ps-btn-container {
+  display: flex ;
+  gap: 25px;
+}
+
 /* ---------- Grid Table ---------- */
 
 .ps-grid {
