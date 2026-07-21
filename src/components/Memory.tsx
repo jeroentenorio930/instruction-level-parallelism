@@ -34,12 +34,14 @@ export default function Memory() {
         setStep(0);
     };
 
+    const STEP_DURATION = 1250; // milliseconds per step
+
     function playAnimation()
     {
         stopAnimation();
-        timers.current.push(setTimeout(highlightValue, 2500));
-        timers.current.push(setTimeout(showLine, 5000));
-        timers.current.push(setTimeout(var1InCPU, 7500));
+        timers.current.push(setTimeout(highlightValue, 1 * STEP_DURATION));
+        timers.current.push(setTimeout(showLine, 2 * STEP_DURATION));
+        timers.current.push(setTimeout(var1InCPU, 3 * STEP_DURATION));
     };
 
     function handleSliderChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -62,17 +64,6 @@ export default function Memory() {
                     <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
                         Reset
                     </button>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
-                    <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
-                    <input 
-                        type="range" 
-                        min="0" 
-                        max="3" 
-                        value={step} 
-                        onChange={handleSliderChange}
-                        style={{ flex: 1, cursor: 'pointer' }}
-                    />
                 </div>
             </div>
 
@@ -147,6 +138,18 @@ export default function Memory() {
                     </div>
                 </div>
 
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
+                <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
+                <input 
+                    type="range" 
+                    min="0" 
+                    max="3" 
+                    value={step} 
+                    onChange={handleSliderChange}
+                    style={{ flex: 1, cursor: 'pointer' }}
+                />
             </div>
         </div>
     );

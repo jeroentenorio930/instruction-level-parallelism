@@ -34,12 +34,14 @@ export default function Fetch() {
         setStep(0);
     };
 
+    const STEP_DURATION = 1250; // milliseconds per step
+
     function playAnimation()
     {
         stopAnimation();
-        timers.current.push(setTimeout(highlightInstruction, 2500));
-        timers.current.push(setTimeout(showLine, 5000));
-        timers.current.push(setTimeout(instructionInCPU, 7500));
+        timers.current.push(setTimeout(highlightInstruction, 1 * STEP_DURATION));
+        timers.current.push(setTimeout(showLine, 2 * STEP_DURATION));
+        timers.current.push(setTimeout(instructionInCPU, 3 * STEP_DURATION));
         
     };
 
@@ -63,17 +65,6 @@ export default function Fetch() {
                     <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
                         Reset
                     </button>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
-                    <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
-                    <input 
-                        type="range" 
-                        min="0" 
-                        max="3" 
-                        value={step} 
-                        onChange={handleSliderChange}
-                        style={{ flex: 1, cursor: 'pointer' }}
-                    />
                 </div>
             </div>
 
@@ -148,6 +139,18 @@ export default function Fetch() {
                     </div>
                 </div>
 
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
+                <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
+                <input 
+                    type="range" 
+                    min="0" 
+                    max="3" 
+                    value={step} 
+                    onChange={handleSliderChange}
+                    style={{ flex: 1, cursor: 'pointer' }}
+                />
             </div>
         </div>
     );

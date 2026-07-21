@@ -32,11 +32,13 @@ export default function Execute() {
         setStep(0);
     };
 
+    const STEP_DURATION = 1250; // milliseconds per step
+
     function playAnimation()
     {
         stopAnimation();
-        timers.current.push(setTimeout(popQuestion, 2500));
-        timers.current.push(setTimeout(showLine, 5000));
+        timers.current.push(setTimeout(popQuestion, 1 * STEP_DURATION));
+        timers.current.push(setTimeout(showLine, 2 * STEP_DURATION));
     };
 
     function handleSliderChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -59,17 +61,6 @@ export default function Execute() {
                     <button className="ps-btn ps-btn--danger" onClick={() => stopAnimation()}>
                         Reset
                     </button>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
-                    <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
-                    <input 
-                        type="range" 
-                        min="0" 
-                        max="2" 
-                        value={step} 
-                        onChange={handleSliderChange}
-                        style={{ flex: 1, cursor: 'pointer' }}
-                    />
                 </div>
             </div>
 
@@ -132,6 +123,18 @@ export default function Execute() {
                     </div>
                 </div>
 
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem', width: '100%' }}>
+                <label style={{ fontSize: '0.9rem', color: 'var(--ps-muted)' }}>Progress:</label>
+                <input 
+                    type="range" 
+                    min="0" 
+                    max="2" 
+                    value={step} 
+                    onChange={handleSliderChange}
+                    style={{ flex: 1, cursor: 'pointer' }}
+                />
             </div>
         </div>
     );
