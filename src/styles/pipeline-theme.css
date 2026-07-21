@@ -159,21 +159,23 @@ h3 {
     padding: 2rem 0;
 }
 
-/* box border base */
+/* Shared box base (sizes removed) */
 .ps-box {
     padding: 1rem;
     border-radius: 6px;
-    width: 140px;
     text-align: center;
     position: relative;
 }
 
-/* box border styles*/
+/* CPU specific styles & size */
 .ps-cpu {
+    width: 140px;
     border: 2px solid var(--ps-cyan);
 }
 
+/* Memory specific styles & size (Bigger) */
 .ps-mem {
+    width: 280px;
     border: 2px solid var(--ps-green);
 }
 

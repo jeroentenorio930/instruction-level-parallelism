@@ -12,6 +12,7 @@ import HazardFlushSim from "../components/HazardFlushSim.tsx"
 import HazardForwardingSim from "../components/HazardForwardingSim.tsx"
 import HazardNoForwardingSim from "../components/HazardNoForwardingSim.tsx"
 import HazardLoadUseSim from "../components/HazardLoadUseSim.tsx"
+import Fetch from "../components/Fetch.tsx"
 import Execute from "../components/Execute.tsx"
 import Memory from "../components/Memory.tsx"
 import Writeback from "../components/Writeback.tsx"
@@ -42,7 +43,7 @@ For the explanation of the 5 clock cycles lets assume that we are performing the
 
 1. **Fetch (F):** The CPU fetches the instruction's encoded bits from memory (often shown in hexadecimal for readability) and brings it back to the CPU.
 
-{/* TODO: animation of fetching from memory */}
+<Fetch client:visible />
 
 2. **Decode (D):** The CPU looks at the instruction it got and looks at it part by part to understand the operation it needs to perform and what values are involved in the operation.
 
