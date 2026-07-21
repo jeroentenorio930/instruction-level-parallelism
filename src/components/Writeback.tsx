@@ -51,7 +51,7 @@ export default function Writeback() {
                     </div>
 
                     <div className="ps-badge">
-                        0x488B_45??_????_????
+                        0x48_8B05_7F00_0000
                     </div>
                 </div>
 

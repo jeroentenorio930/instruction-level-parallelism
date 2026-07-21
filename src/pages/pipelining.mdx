@@ -13,6 +13,7 @@ import HazardForwardingSim from "../components/HazardForwardingSim.tsx"
 import HazardNoForwardingSim from "../components/HazardNoForwardingSim.tsx"
 import HazardLoadUseSim from "../components/HazardLoadUseSim.tsx"
 import Fetch from "../components/Fetch.tsx"
+import Decode from "../components/Decode.tsx"
 import Execute from "../components/Execute.tsx"
 import Memory from "../components/Memory.tsx"
 import Writeback from "../components/Writeback.tsx"
@@ -35,12 +36,13 @@ This exhibit explores **pipelining**, the primary hardware technique CPUs use to
 
 Before going into the rest of the exhibit, we first need to introduce the 5 clock cycles done by the machine to perform a single instruction. These are Fetch, Decode, Execute, Memory, and Write-back.
 
-For the explanation of the 5 clock cycles lets assume that we are performing the instruction below. Where RAX is a register in the CPU (temporary storage) and var1 is located in the memory with the value 4.
+For the explanation of the 5 clock cycles lets assume that we are performing the instruction below. Where RAX is a register in the CPU (temporary storage) and var1 is located in the memory with a of value 4.
 
 ```
 
     MOV RAX, [var1]
-    
+
+
 ```
 
 1. **Fetch (F):** The CPU fetches the instruction's encoded bits from memory (often shown in hexadecimal for readability) and brings it back to the CPU.
@@ -49,7 +51,7 @@ For the explanation of the 5 clock cycles lets assume that we are performing the
 
 2. **Decode (D):** The CPU looks at the instruction it got and looks at it part by part to understand the operation it needs to perform and what values are involved in the operation.
 
-{/* TODO: animation of decoding the instruction */}
+<Decode client:visible />
 
 3. **Execute (E):** Now that the CPU understands the instruction, the CPU then executes it.
 
@@ -161,3 +163,7 @@ Instruction-Level Parallelism via pipelining is the foundation of high-performan
 * Stallings, W. (2016). *Computer Organization and Architecture*. Pearson.
 * Cloutier, F. (n.d.). *Jcc — Jump if condition is met*. x86 and amd64 instruction reference. Retrieved from https://www.felixcloutier.com/x86/jcc
 * Intel Corporation. (1986). *80386 programmer's reference manual*. Retrieved from https://pdos.csail.mit.edu/6.828/2017/readings/i386/Jcc.htm
+* Alheraki, A. (2026, January 11). *x86-64 Machine Code Encoding: Real encoding examples with byte breakdowns*. SimplifyC++. Retrieved from https://www.simplifycpp.org/?id=a0741
+* Intel Corporation. (2024). *Intel® 64 and IA-32 Architectures Software Developer's Manual, Volume 2 (2A, 2B, 2C, & 2D): Instruction Set Reference, A-Z*. Retrieved from https://cdrdv2.intel.com/v1/dl/getContent/671110
+* Stack Overflow. (n.d.). *What is REX prefix in instruction encoding?* Retrieved from https://stackoverflow.com/questions/68604377/what-is-rex-prefix-in-instruction-encoding
+* Binkley, D. (n.d.). *Encoding real x86 instructions*. CS 371, Loyola University Maryland. Retrieved from https://www.cs.loyola.edu/~binkley/371/Encoding_Real_x86_Instructions.html
