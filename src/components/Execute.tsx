@@ -44,7 +44,7 @@ export default function Execute() {
                     </div>
 
                     {(step == 1 || step == 2) && (
-                        <div className="ps-badge ps-badge--warning" style={{ marginBottom: '0.5rem' }}>
+                        <div className="ps-badge ps-badge--warning">
                             Give me the value of var1
                         </div>
                     )}

@@ -184,7 +184,7 @@ h3 {
     position: relative;
 }
 
-/* row container */
+/* Row Container */
 .ps-row {
     display: flex;
     justify-content: space-between;
@@ -194,17 +194,7 @@ h3 {
     font-size: 0.9rem;
 }
 
-/* place label top left */
-.ps-label {
-    position: absolute;
-    top: -12px;
-    left: 12px;
-    background: var(--ps-bg-mid, #1e1e1e);
-    padding: 0 8px;
-    font-size: 0.85rem;
-}
-
-/* path */
+/* Path (so like the space itself where the line appears */
 .ps-path {
     flex: 1;
     position: relative;
@@ -220,13 +210,13 @@ h3 {
     overflow: visible;
 }
 
-/* line */
+/* Line */
 .ps-exec-line {
     stroke: var(--ps-cyan);
     stroke-width: 2;
 }
 
-/* arrow facing right */
+/* Arrow Facing Right */
 .ps-exec-arrow {
     fill: var(--ps-cyan);
 }
@@ -250,6 +240,31 @@ h3 {
     text-align: center;
     margin-bottom: 1.5rem;
     position: relative;
+}
+
+/* Register File Box */
+.ps-register-file {
+    border: 2px solid var(--ps-cyan);
+    padding: 1rem;
+    border-radius: 6px;
+    width: 255px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* ---------- All Cycles --------- */ 
+/* Place Label Top Left */
+.ps-label {
+    position: absolute;
+    top: -12px;
+    left: 12px;
+    background: var(--ps-bg-mid, #1e1e1e);
+    padding: 0 8px;
+    font-size: 0.85rem;
 }
 
 /* ---------- Grid Table ---------- */
