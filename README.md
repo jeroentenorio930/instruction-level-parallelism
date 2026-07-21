@@ -121,6 +121,7 @@ As it is, we believe the Virtual Exhibit satisfies all the given requirements. P
 
 - **Hazard Simulations (`HazardForwardingSim.tsx`, `HazardNoForwardingSim.tsx`, `HazardLoadUseSim.tsx`)**: Created simulations for Data Hazards showing how the CPU handles them both with and without forwarding, along with a simulation of a Load-Use hazard to showcase the limitations of forwarding.
 - **Horizontal Overflow Fix (`SequentialSim.tsx`)**: A little AHA! moment here too, we fixed the web scaling by preventing it from overflowing by adding a simple horizontal scrollbar. It's a simple fix but drastically improves the overall look of the simulation.
+- **Necessary Context + Animations (`Execute.tsx`, `Decode.tsx`, `Fetch.tsx`, `Memory.tsx`, `Writeback.tsx`)**: Added additional information for people to better understand pipelining - explaining what exactly the CPU does each cycle to execute an instruction. Complete with neat animations!
 
 ### Disclosure on Usage of AI and LLM
 
