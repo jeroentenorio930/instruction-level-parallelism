@@ -140,7 +140,7 @@ export default function HazardForwardingSim() {
   return (
     <div className="pipeline-sim">
       <div className="ps-header">
-        <h3 className="ps-title">With Forwarding (Internal Data Routing)</h3>
+        <h3 className="ps-title" style={{ color: 'var(--ps-white)' }} >With Forwarding (Internal Data Routing)</h3>
         <div className="ps-controls">
           <button className="ps-btn ps-btn--danger" onClick={togglePlay}>{isAnimating ? '⏸ Pause' : '▶ Play'}</button>
           <button className="ps-btn" onClick={handleStepPrev} disabled={currentCycle <= -1}>◀ Step Back</button>

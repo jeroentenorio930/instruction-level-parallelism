@@ -145,7 +145,7 @@ export default function HazardNoForwardingSim() {
   return (
     <div className="pipeline-sim">
       <div className="ps-header">
-        <h3 className="ps-title">No Forwarding (Stall until Write-Back)</h3>
+        <h3 className="ps-title" style={{ color: 'var(--ps-white)' }} >No Forwarding (Stall until Write-Back)</h3>
         <div className="ps-controls">
           <button className="ps-btn ps-btn--danger" onClick={togglePlay}>{isAnimating ? '⏸ Pause' : '▶ Play'}</button>
           <button className="ps-btn" onClick={handleStepPrev} disabled={currentCycle <= -1}>◀ Step Back</button>

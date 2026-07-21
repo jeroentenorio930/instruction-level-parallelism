@@ -49,7 +49,7 @@ export default function Execute() {
     return (
         <div className="pipeline-sim">
             <div className="ps-header">
-                <h3 className="ps-title">
+                <h3 className="ps-title-cycle" style={{ color: 'var(--ps-red)' }} >
                     Cycle 3: Execute (E)
                 </h3>
                 

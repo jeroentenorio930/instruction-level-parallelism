@@ -52,7 +52,7 @@ export default function Writeback() {
     return (
         <div className="pipeline-sim">
             <div className="ps-header">
-                <h3 className="ps-title">
+                <h3 className='ps-title-cycle' style={{ color: 'var(--ps-purple)' }} >
                     Cycle 5: Writeback (WB)
                 </h3>
                 

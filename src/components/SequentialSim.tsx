@@ -107,7 +107,7 @@ export default function SequentialSim() {
   return (
     <div className="pipeline-sim">
       <div className="ps-header">
-        <h3 className="ps-title">Sequential Execution (No Pipelining)</h3>
+        <h3 className="ps-title" style={{ color: 'var(--ps-white)' }} >Sequential Execution (No Pipelining)</h3>
         <div className="ps-controls">
           <button className="ps-btn" onClick={togglePlay}>
             {isAnimating ? '⏸ Pause' : '▶ Play'}

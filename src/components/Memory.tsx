@@ -52,7 +52,7 @@ export default function Memory() {
     return (
         <div className="pipeline-sim">
             <div className="ps-header">
-                <h3 className="ps-title">
+                <h3 className="ps-title-cycle" style={{ color: 'var(--ps-yellow)' }} >
                     Cycle 4: Memory (M)
                 </h3>
                 

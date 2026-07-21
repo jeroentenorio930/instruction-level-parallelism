@@ -61,10 +61,6 @@
   z-index: 2;
 }
 
-h3 {
-  color: white !important;
-}
-
 /* ---------- Header ---------- */
 
 .ps-header {
@@ -304,6 +300,11 @@ h3 {
 .ps-btn-container {
   display: flex ;
   gap: 25px;
+}
+
+.ps-title-cycle::before {
+  content: '▸';
+  color: var(--ps-white);
 }
 
 /* ---------- Grid Table ---------- */

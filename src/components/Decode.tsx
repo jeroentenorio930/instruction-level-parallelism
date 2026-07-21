@@ -46,7 +46,7 @@ export default function Decode() {
     return (
         <div className="pipeline-sim">
             <div className="ps-header">
-                <h3 className="ps-title">
+                <h3 className="ps-title-cycle" style={{ color: '#55FF55' }} >
                     Cycle 2: Decode (D)
                 </h3>
                 
@@ -64,14 +64,14 @@ export default function Decode() {
             {/* WHO ARE YOU? Explanations */}
             {step == 2 && (
                 <div className="ps-explanation-row">
-                    <div className="ps-explanation-box" style={{ borderColor: 'var(--ps-yellow)' }}>
-                        <div className="ps-explanation-label" style={{ color: 'var(--ps-yellow)' }}>
+                    <div className="ps-explanation-box" style={{ borderColor: 'var(--ps-red)' }}>
+                        <div className="ps-explanation-label" style={{ color: 'var(--ps-red)' }}>
                             48
                         </div>
                         <span className="ps-explanation-text">We are accessing 64 bit operands</span>
                     </div>
-                    <div className="ps-explanation-box" style={{ borderColor: 'var(--ps-cyan)' }}>
-                        <div className="ps-explanation-label" style={{ color: 'var(--ps-cyan)' }}>
+                    <div className="ps-explanation-box" style={{ borderColor: 'var(--ps-purple)' }}>
+                        <div className="ps-explanation-label" style={{ color: 'var(--ps-purple)' }}>
                             8B
                         </div>
                         <span className="ps-explanation-text">Moving from a 64 bit register or memory to a 64 bit register</span>
@@ -82,8 +82,8 @@ export default function Decode() {
                         </div>
                         <span className="ps-explanation-text">The destination is RAX, find var1 based on how far it is from RIP</span>
                     </div>
-                    <div className="ps-explanation-box" style={{ borderColor: 'var(--ps-red)' }}>
-                        <div className="ps-explanation-label" style={{ color: 'var(--ps-red)' }}>
+                    <div className="ps-explanation-box" style={{ borderColor: 'var(--ps-yellow)' }}>
+                        <div className="ps-explanation-label" style={{ color: 'var(--ps-yellow)' }}>
                             7F 00 00 00
                         </div>
                         <span className="ps-explanation-text">It is 127 addresses away from RIP</span>
@@ -116,11 +116,11 @@ export default function Decode() {
                                 0x
                             </div>
 
-                            <div className="ps-badge" style={{ color: 'var(--ps-yellow)', borderColor: 'var(--ps-yellow)' }}>
+                            <div className="ps-badge" style={{ color: 'var(--ps-red)', borderColor: 'var(--ps-red)' }}>
                                 48
                             </div>
 
-                            <div className="ps-badge" style={{ color: 'var(--ps-cyan)', borderColor: 'var(--ps-cyan)' }}>
+                            <div className="ps-badge" style={{ color: 'var(--ps-purple)', borderColor: 'var(--ps-purple)' }}>
                                 8B
                             </div>
 
@@ -128,7 +128,7 @@ export default function Decode() {
                                 05
                             </div>
 
-                            <div className="ps-badge" style={{ color: 'var(--ps-red)', borderColor: 'var(--ps-red)' }}>
+                            <div className="ps-badge" style={{ color: 'var(--ps-yellow)', borderColor: 'var(--ps-yellow)' }}>
                                 7F 00 00 00
                             </div>
                         </div>

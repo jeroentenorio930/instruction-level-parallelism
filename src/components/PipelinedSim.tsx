@@ -106,7 +106,7 @@ export default function PipelinedSim() {
   return (
     <div className="pipeline-sim">
       <div className="ps-header">
-        <h3 className="ps-title">Pipelined Execution (Overlapped)</h3>
+        <h3 className="ps-title" style={{ color: 'var(--ps-white)' }} >Pipelined Execution (Overlapped)</h3>
         <div className="ps-controls">
           <button className="ps-btn ps-btn--success" onClick={togglePlay}>
             {isAnimating ? '⏸ Pause' : '▶ Play'}

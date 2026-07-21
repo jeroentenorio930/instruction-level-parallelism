@@ -53,7 +53,7 @@ export default function Fetch() {
     return (
         <div className="pipeline-sim">
             <div className="ps-header">
-                <h3 className="ps-title">
+                <h3 className="ps-title-cycle" style={{ color: 'var(--ps-cyan)' }} >
                     Cycle 1: Fetch (F)
                 </h3>
                 

@@ -199,7 +199,7 @@ export default function HazardFlushSim() {
   return (
     <div className="pipeline-sim">
       <div className="ps-header">
-        <h3 className="ps-title">Branch Misprediction</h3>
+        <h3 className="ps-title" style={{ color: 'var(--ps-white)' }} >Branch Misprediction</h3>
         <div className="ps-controls">
           <button className="ps-btn ps-btn--danger" onClick={togglePlay}>
             {isAnimating ? '⏸ Pause' : '▶ Play'}
