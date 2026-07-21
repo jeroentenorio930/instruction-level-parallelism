@@ -50,7 +50,7 @@ export default function Fetch() {
 
                         {step == 3 && (
                             <span style={{ color: 'var(--ps-green)' }} >
-                                0x488B_45??_????_????
+                                0x48_8B05_7F00_0000
                             </span>
                         )}
 
@@ -86,13 +86,13 @@ export default function Fetch() {
 
                         {(step == 1 || step == 2) && (
                             <span style={{ color: 'var(--ps-green)' }} >
-                                0x488B_45??_????_????
+                                0x48_8B05_7F00_0000
                             </span>
                         )}
 
                         {(step == 0 || step == 3) && (
                             <span>
-                                0x488B_45??_????_????
+                                00x48_8B05_7F00_0000
                             </span>
                         )}
                     </div>
