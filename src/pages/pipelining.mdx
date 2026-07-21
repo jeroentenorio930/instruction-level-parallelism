@@ -79,7 +79,7 @@ Although pipelining increases performance, it introduces **hazards**—situation
 
 A **data hazard** occurs when instructions are so close together that one instruction needs a piece of data before a previous instruction has finished computing it. 
 
-Given this SASM instruction sequence:
+Given this NASM instruction sequence:
 
 ```
 
@@ -117,7 +117,7 @@ Because fetching `[ALPHA]` happens in Step 4 (Memory), the data physically canno
 
 A **control hazard** (or branch hazard) occurs when the CPU encounters a branching instruction and doesn't know which instructions to fetch next. 
 
-Given this SASM instruction sequence:
+Given this NASM instruction sequence:
 
 ```
 
